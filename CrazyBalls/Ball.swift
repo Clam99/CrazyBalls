@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Sam Noyes. All rights reserved.
 //
 
-import Foundation//SEE LOOK I JUST REMOVED THE TEST EDIT HAHAHA
+import Foundation
 import UIKit
 
 class Ball {
@@ -41,5 +41,13 @@ class Ball {
         vx = (10.0*c)
         vy = 0
         a = 9.8*c
+    }
+    
+    init(x:Double, y:Double, radius:Double radiansCounterClockwiseFromHorizontal:Double, initialVelocity:Double) {
+        self.x = x
+        self.y = y
+        r = radius
+        vx = cos(radiansCounterClockwiseFromHorizontal)*initialVelocity
+        vy = -1 * sin(radiansCounterClockwiseFromHorizontal)*initialVelocity
     }
 }
