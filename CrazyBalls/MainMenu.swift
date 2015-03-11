@@ -9,7 +9,7 @@ class MainMenu: UIViewController
     @IBOutlet weak var playBut: UIButton!
     @IBOutlet weak var highscoreText: UILabel!
     
-    override init() {
+    override func viewDidLoad() {
         let timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "timerFunc" repeats: true)
         title.alpha = 0.0
         playBut.alpha = 0.0
