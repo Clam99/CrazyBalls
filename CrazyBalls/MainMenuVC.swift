@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 class MainMenuVC: UIViewController, TargetDelegate {
-    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var playBut: UIButton!
     @IBOutlet weak var highscoreText: UILabel!
     
@@ -13,7 +13,7 @@ class MainMenuVC: UIViewController, TargetDelegate {
     }
     
     override func loadView() {
-        let menu = MainMenu(UIScreen.mainScreen().bounds())
+        let menu = MainMenu(frame: UIScreen.mainScreen().bounds)
         menu.delegate = self
         self.view = menu
     }

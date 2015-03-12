@@ -43,7 +43,7 @@ class Ball {
         a = 9.8*c
     }
     
-    init(x:Double, y:Double, radius:Double radiansCounterClockwiseFromHorizontal:Double, initialVelocity:Double) {
+    init(x:Double, y:Double, radius:Double, radiansCounterClockwiseFromHorizontal:Double, initialVelocity:Double) {
         self.x = x
         self.y = y
         r = radius
