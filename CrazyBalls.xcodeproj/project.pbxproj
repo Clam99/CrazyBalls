@@ -24,6 +24,7 @@
 		E58FABCC1AB0BAD5008A1D0B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58FABC21AB0BAD5008A1D0B /* ViewController.swift */; };
 		E58FABCE1AB13340008A1D0B /* MainMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58FABCD1AB13340008A1D0B /* MainMenuVC.swift */; };
 		E58FABD01AB13357008A1D0B /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58FABCF1AB13357008A1D0B /* MainMenu.swift */; };
+		E5EF42AA1AB13C0D00AB5AE5 /* TargetDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF42A91AB13C0D00AB5AE5 /* TargetDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		E58FABC21AB0BAD5008A1D0B /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E58FABCD1AB13340008A1D0B /* MainMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuVC.swift; sourceTree = "<group>"; };
 		E58FABCF1AB13357008A1D0B /* MainMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		E5EF42A91AB13C0D00AB5AE5 /* TargetDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				E58FABCD1AB13340008A1D0B /* MainMenuVC.swift */,
 				E58FABBE1AB0BAD5008A1D0B /* Spring.swift */,
 				E58FABBF1AB0BAD5008A1D0B /* Surface.swift */,
+				E5EF42A91AB13C0D00AB5AE5 /* TargetDelegate.swift */,
 				E58FABC01AB0BAD5008A1D0B /* Vector.swift */,
 				E58FABC11AB0BAD5008A1D0B /* View.swift */,
 				E58FABC21AB0BAD5008A1D0B /* ViewController.swift */,
@@ -252,6 +255,7 @@
 				E58FABCB1AB0BAD5008A1D0B /* View.swift in Sources */,
 				E58FABC51AB0BAD5008A1D0B /* ChangeableAngle.swift in Sources */,
 				E58FABCC1AB0BAD5008A1D0B /* ViewController.swift in Sources */,
+				E5EF42AA1AB13C0D00AB5AE5 /* TargetDelegate.swift in Sources */,
 				E58FABC71AB0BAD5008A1D0B /* GameObject.swift in Sources */,
 				E58FAB9A1AB0BA12008A1D0B /* AppDelegate.swift in Sources */,
 				E58FABC61AB0BAD5008A1D0B /* GameLogic.swift in Sources */,
@@ -451,6 +455,7 @@
 				E58FABB51AB0BA12008A1D0B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E58FABB61AB0BA12008A1D0B /* Build configuration list for PBXNativeTarget "CrazyBallsTests" */ = {
 			isa = XCConfigurationList;
@@ -459,6 +464,7 @@
 				E58FABB81AB0BA12008A1D0B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
