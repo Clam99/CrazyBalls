@@ -34,11 +34,13 @@ class MainMenu: UIView {
         }
         if (timerCount%2 == 0 && timerCount<maxCount) {
             let c:Double = Double(arc4random())%(30*(M_PI/180))
-            balls.append(Ball(x: 0.0, y: 0.0, radius: 50.0, radiansCounterClockwiseFromHorizontal: -c, initialVelocity: 10))// - append balls facing in random directions
-            balls.append(Ball(x:0, y:0, radius:50,radiansCounterClockwiseFromHorizontal:-1*((Double(arc4random())%(30*(M_PI/180))+30*(M_PI/180))), initialVelocity: 10))// - append balls facing in random directions
-            balls.append(Ball(x:0, y:0, radius:50,radiansCounterClockwiseFromHorizontal:-1*(Double(arc4random())%(30*(M_PI/180))+60*(M_PI/180)), initialVelocity: 10))// - append balls facing in random directions
+            balls.append(createBallBetweenDegrees(min:-30.0, max:0.0)// - append balls facing in random directions
+            balls.append(createBallBetweenDegrees(min:-60.0, max:-30.0)// - append balls facing in random directions
+            balls.append(createBallBetweenDegrees(min:-90.0, max:-60.0))// - append balls facing in random directions
+
+balls.append(createBallBetweenDegrees(min:-90.0, max:0.0))
         }
-        if (timerCount>=maxCount) {
+        else if (timerCount>=maxCount) {
             println("Stopping")
             NSTimer.scheduledTimerWithTimeInterval(4, target: self, selector: "stopTimer", userInfo: nil, repeats: false)
             showTitle()
@@ -47,6 +49,11 @@ class MainMenu: UIView {
         setNeedsDisplay()
     }
     
+func createBallBetweenDegrees(min:Double max:Double) -> Ball {
+return Ball(x:0, y:0, radius:50,radiansCounterClockwiseFromHorizontal:(Double(arc4random())%((max-min)*(M_PI/180))+(min)*(M_PI/180)), initialVelocity: 10)
+}
+
+
     func stopTimer() {
         if let t = timer {
             t.invalidate()
