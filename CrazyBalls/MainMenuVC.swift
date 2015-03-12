@@ -2,42 +2,48 @@ import Foundation
 import UIKit
 
 class MainMenuVC: UIViewController, TargetDelegate {
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var playBut: UIButton!
-    @IBOutlet weak var highscoreText: UILabel!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var playBut: UIButton!
+    @IBOutlet var highscoreText: UILabel!
     
     override func viewDidLoad() {
-        title.alpha = 0.0
-        playBut.alpha = 0.0
-        highscoreText.alpha = 0.0
+        if let label = titleLabel {
+            label.alpha = 0.0
+        }
+        if let but = playBut {
+            but.alpha = 0.0
+        }
+        if let label = highscoreText {
+            label.alpha = 0.0
+        }
     }
-    
+    /*
     override func loadView() {
-        let menu = MainMenu(UIScreen.mainScreen().bounds())
+        let menu = MainMenu(frame: UIScreen.mainScreen().bounds)
         menu.delegate = self
         self.view = menu
-    }
+    }*/
     
     func receiveAction(passedData:String) {
-        if (let definiteCase = ButtonLayout(rawValue: passedData)) {
+        if let definiteCase = ButtonLayout(rawValue: passedData) {
             switch definiteCase {
                 case .allHidden:
                     UIView.animateWithDuration(1.5, animations: {
-                        title.alpha = 0.0
-                        playBut.alpha = 0.0
-                        highscoreText.alpha = 0.0
+                        self.titleLabel.alpha = 0.0
+                        self.playBut.alpha = 0.0
+                        self.highscoreText.alpha = 0.0
                     })
                 case .justTitle:
                     UIView.animateWithDuration(1.5, animations: {
-                        title.alpha = 1.0
-                        playBut.alpha = 0.0
-                        highscoreText.alpha = 0.0
+                        self.titleLabel.alpha = 1.0
+                        self.playBut.alpha = 0.0
+                        self.highscoreText.alpha = 0.0
                     })
                 case .allShown:
                     UIView.animateWithDuration(1.5, animations: {
-                        title.alpha = 1.0
-                        playBut.alpha = 1.0
-                        highscoreText.alpha = 1.0
+                        self.titleLabel.alpha = 1.0
+                        self.playBut.alpha = 1.0
+                        self.highscoreText.alpha = 1.0
                     })
             }
         }

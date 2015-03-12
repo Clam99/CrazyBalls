@@ -13,11 +13,11 @@ import UIKit
 
 class View: UIView {
     let logic:GameLogic
-    let timer:NSTimer!
+    var timer:NSTimer!
     var gameRunning = false
     var isSelecting = false
     
-    init(frame:CGRect) {
+    override init(frame:CGRect) {
         logic = GameLogic(frame: frame)
         super.init(frame: frame)
         self.opaque = false
@@ -25,7 +25,7 @@ class View: UIView {
         startSelection()
     }
     
-    func startSelection() {\\here user places objects and then pulls back and releases the ball
+    func startSelection() {//here user places objects and then pulls back and releases the ball
         isSelecting = true
     }
     
@@ -61,7 +61,6 @@ class View: UIView {
     func update() {
         logic.updateLogic()
         setNeedsDisplay()
-        setFrame(superview().frame)
     }
     
     
