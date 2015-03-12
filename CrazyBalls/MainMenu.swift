@@ -73,8 +73,8 @@ class MainMenu: UIView {
         UIView.animateWithDuration(1, animations: {
                 l.alpha = 1.0
             })
-        NSTimer.scheduledTimerWithTimeInterval(0.7, target: self, selector: "showMenu", userInfo: nil, repeats: false)
-        showMenu()
+        NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "showMenu", userInfo: nil, repeats: false)
+      
     }
     func showMenu() {
        // delegate.receiveAction(ButtonLayout.allShown.rawValue)
