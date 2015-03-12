@@ -1,19 +1,18 @@
 import Foundation
 import UIKit
 
-class MainMenu: UIViewController
+class MainMenu: UIView {
     var balls:[Ball] = []
     var timerCount = 0
     let timer:NSTimer!
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var playBut: UIButton!
-    @IBOutlet weak var highscoreText: UILabel!
+    var delegate:TargetDelegate?
     
-    override func viewDidLoad() {
+    init(frame:CGRect) {
         let timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "timerFunc" repeats: true)
         title.alpha = 0.0
         playBut.alpha = 0.0
         highscoreText.alpha = 0.0
+        super.init(frame)
     }
     func timerFunc() {
         timerCount++
@@ -39,15 +38,11 @@ class MainMenu: UIViewController
         }
     }
     func showTitle() {
-        UIView.animateWithDuration(1.5, animations: {
-            label.alpha = 1.0
-        })
+        delegate.recieveAction(ButtonLayout.justTitle.rawValue)
+        NSTimer.scheduledTimerWithTimeInterval(0.7, target: self, selector: "showMenu" repeats: false)
         showMenu()
     }
     func showMenu() {
-        UIView.animateWithDuration(1.0, animations: {
-            playButton.alpha = 1.0
-            highscoreText.alpha = 1.0
-        })
+        delegate.recieveAction(ButtonLayout.allShown.rawValue)
     }
 }

@@ -17,7 +17,7 @@ class View: UIView {
     var gameRunning = false
     var isSelecting = false
     
-    override init(frame:CGRect) {
+    init(frame:CGRect) {
         logic = GameLogic(frame: frame)
         super.init(frame: frame)
         self.opaque = false
