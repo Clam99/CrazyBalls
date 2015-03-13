@@ -11,11 +11,13 @@ import UIKit
 
 class GameLogic {
     let frame:CGRect
-    var balls:[Ball] = [Ball(x:50, y: 75, radius: 25)]
+    let radius = 25.0
+    var balls:[Ball]
     var surfaces:[Surface]
     
     init(frame:CGRect) {
         self.frame = frame
+        balls = [Ball(x:Double(frame.size.width)/2, y: Double(frame.size.height)/2, radius: radius)]
         surfaces = [Surface(fixed: true, points: (Vector(x: 0, y:150), Vector(x: Double(frame.size.width), y: 300)))]
     }
     
