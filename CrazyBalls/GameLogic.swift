@@ -57,8 +57,19 @@ class GameLogic {
     }
     
     func moveBallOut(b:Ball, s:Surface) {
-        b.x = s.getCoordsCorrespondingToXAndYWithAngle(b.x, y: b.y).x+b.r*sin(s.angle)
-        b.y = s.getCoordsCorrespondingToXAndYWithAngle(b.x, y: b.y).y-b.r*cos(s.angle)
+        Vector collisionPoint = s.getCoordsCorrespondingToXAndYWithAngle(ball.getBallLogic().getX(),ball.getBallLogic().getY())//Gets point on surface closest to the ball
+        if (b.x-collisionPoint.x >= 0) {//if ball is on the right side of the surface, move right
+            b.x = collisionPoint.x + b.radius * cos((90*(M_PI/180))-s.angleFromPositiveHor())
+        }
+        else {//otherwise, move left
+            b.x = collisionPoint.x + b.radius * cos((90*(M_PI/180))-s.angleFromPositiveHor())
+        }
+        if (b.y-collisionPoint.y >= 0) {//If ball is below, move down (to a higher y value)
+            b.y = (collisionPoint.y + ball.radius * sin((90*(M_PI/180)) - s.angleFromPositiveHor()))
+        }
+        else {//otherwise, move up
+            b.y = (collisionPoint.y - ball.radius * sin((90*(M_PI/180)) - s.angleFromPositiveHor()))
+        }
     }
     
     func bounce(s:Surface, ball:Ball) {//Reflect ball's velocity over the vector of the surface, using Doubles for more precision
