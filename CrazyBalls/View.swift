@@ -52,7 +52,7 @@ class View: UIView {
             UIColor.blackColor().setFill()
             circle.fill()
         }
-        for surface in logic.surfaces {
+        for surface in logic.ll.surfaces {
             
             let ctx:CGContext = UIGraphicsGetCurrentContext()
             

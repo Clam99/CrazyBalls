@@ -13,12 +13,12 @@ class GameLogic {
     let frame:CGRect
     let radius = 25.0
     var balls:[Ball]
-    var surfaces:[Surface]
+    var ll:LevelLayout
     
     init(frame:CGRect) {
         self.frame = frame
         balls = [Ball(x:Double(frame.size.width)/2, y: Double(frame.size.height)/2, radius: radius)]
-        surfaces = [Surface(fixed: true, points: (Vector(x: 0, y:150), Vector(x: Double(frame.size.width), y: 300)))]
+        ll = GameLogic.gameLayoutArray()[0]
     }
     
     func updateLogic() {
@@ -57,32 +57,26 @@ class GameLogic {
     }
     
     func moveBallOut(b:Ball, s:Surface) {
-        Vector collisionPoint = s.getCoordsCorrespondingToXAndYWithAngle(ball.getBallLogic().getX(),ball.getBallLogic().getY())//Gets point on surface closest to the ball
+        let collisionPoint:Vector = s.getCoordsCorrespondingToXAndYWithAngle(b.x,y: b.y)//Gets point on surface closest to the ball
         if (b.x-collisionPoint.x >= 0) {//if ball is on the right side of the surface, move right
-            b.x = collisionPoint.x + b.radius * cos((90*(M_PI/180))-s.angleFromPositiveHor())
+            b.x = collisionPoint.x + b.r * cos((90*(M_PI/180))-s.angle)
         }
         else {//otherwise, move left
-            b.x = collisionPoint.x + b.radius * cos((90*(M_PI/180))-s.angleFromPositiveHor())
+            b.x = collisionPoint.x - b.r * cos((90*(M_PI/180))-s.angle)
         }
         if (b.y-collisionPoint.y >= 0) {//If ball is below, move down (to a higher y value)
-            b.y = (collisionPoint.y + ball.radius * sin((90*(M_PI/180)) - s.angleFromPositiveHor()))
+            b.y = (collisionPoint.y + b.r * sin((90*(M_PI/180)) - s.angle))
         }
         else {//otherwise, move up
-            b.y = (collisionPoint.y - ball.radius * sin((90*(M_PI/180)) - s.angleFromPositiveHor()))
+            b.y = (collisionPoint.y - b.r * sin((90*(M_PI/180)) - s.angle))
         }
     }
     
     func bounce(s:Surface, ball:Ball) {//Reflect ball's velocity over the vector of the surface, using Doubles for more precision
     
         //Taken from here:http: //stackoverflow.com/questions/14885693/how-do-you-reflect-a-vector-over-another-vector
-        //println("Bouncing")
         let vec1:Vector =  Vector(x: ball.vx, y: ball.vy);
         let vec2:Vector = s.getSurfaceVector();
-        
-        //println(ball.vx)
-        //println(ball.vy)
-        //println(s.getSurfaceVector().x)
-        //println(s.getSurfaceVector().y)
     
         // 1. Find the dot product of vec1 and vec2
         // Note: dx and dy are vx and vy divided over the length of the vector (magnitude)
@@ -99,16 +93,18 @@ class GameLogic {
         // 4. Project vec1 over vec2's left normal
         var prB_vx:Double = dpB * vec2.leftNormal().unitVector().x;
         var prB_vy:Double = dpB * vec2.leftNormal().unitVector().y;
-        //println("dpB = \(dpB)")
         //println(vec2.leftNormal().unitVector().y)
         // 5. Add the first projection prA to the reverse of the second -prB
         var new_vx:Double = prA_vx - prB_vx;
         var new_vy:Double = prA_vy - prB_vy;
         
-        //println(new_vx)
-        //println(new_vy)
-        
         ball.vx = new_vx
         ball.vy = new_vy
     }
+    
+    class func gameLayoutArray() -> [LevelLayout] {
+        let gla:[LevelLayout] = [LevelLayout(s: [Surface(fixed: true, points: (Vector(x: 0, y:0), Vector(x: Double(UIScreen.mainScreen().bounds.width), y: 150)))], b: [], movingBlackHoles: 2, movingSprings: 0, movingSurfaces: 0)]
+        return gla
+    }
+    
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E55EDF2D1AB3F1F4001A66A6 /* LevelLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55EDF2C1AB3F1F4001A66A6 /* LevelLayout.swift */; };
 		E58FAB9A1AB0BA12008A1D0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58FAB991AB0BA12008A1D0B /* AppDelegate.swift */; };
 		E58FAB9F1AB0BA12008A1D0B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E58FAB9D1AB0BA12008A1D0B /* Main.storyboard */; };
 		E58FABA11AB0BA12008A1D0B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E58FABA01AB0BA12008A1D0B /* Images.xcassets */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E55EDF2C1AB3F1F4001A66A6 /* LevelLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelLayout.swift; sourceTree = "<group>"; };
 		E58FAB941AB0BA12008A1D0B /* CrazyBalls.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrazyBalls.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E58FAB981AB0BA12008A1D0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E58FAB991AB0BA12008A1D0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				E58FABBB1AB0BAD5008A1D0B /* ChangeableAngle.swift */,
 				E58FABBC1AB0BAD5008A1D0B /* GameLogic.swift */,
 				E58FABBD1AB0BAD5008A1D0B /* GameObject.swift */,
+				E55EDF2C1AB3F1F4001A66A6 /* LevelLayout.swift */,
 				E58FABCF1AB13357008A1D0B /* MainMenu.swift */,
 				E58FABCD1AB13340008A1D0B /* MainMenuVC.swift */,
 				E58FABBE1AB0BAD5008A1D0B /* Spring.swift */,
@@ -251,6 +254,7 @@
 				E58FABD01AB13357008A1D0B /* MainMenu.swift in Sources */,
 				E58FABC31AB0BAD5008A1D0B /* Ball.swift in Sources */,
 				E58FABC91AB0BAD5008A1D0B /* Surface.swift in Sources */,
+				E55EDF2D1AB3F1F4001A66A6 /* LevelLayout.swift in Sources */,
 				E58FABCE1AB13340008A1D0B /* MainMenuVC.swift in Sources */,
 				E58FABCB1AB0BAD5008A1D0B /* View.swift in Sources */,
 				E58FABC51AB0BAD5008A1D0B /* ChangeableAngle.swift in Sources */,

@@ -7,7 +7,17 @@
 //
 
 import Foundation
+import UIKit
 
 class BlackHole: GameObject {
-    var fixed:Bool { get{return false} }
+    let fixed:Bool
+    
+    init(fixed:Bool) {
+        self.fixed = fixed
+    }
+    
+    func getBP() -> UIBezierPath {
+        bp = UIBezierPath(arcCenter: <#CGPoint#>, radius: <#CGFloat#>, startAngle: <#CGFloat#>, endAngle: <#CGFloat#>, clockwise: <#Bool#>))
+    }
+    
 }
