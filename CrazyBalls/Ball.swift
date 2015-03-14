@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class Ball {
-    let c:Double = 0.05
+    let c:Double = 0.025
     var x: Double = 0
     var y:Double = 0
     let r:Double = 0
