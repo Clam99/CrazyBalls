@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Spring: Surface, ChangeableAngle {
     
@@ -18,5 +19,13 @@ class Spring: Surface, ChangeableAngle {
     }
     override func updatePoints() {
         
+    }
+    override func getBP() -> UIBezierPath {
+        var bp = super.getBP()
+        for var i = 0; i<5; i++ {
+            let toAddX = sin(angle)*((RECT_HEIGHT/2)+(RECT_HEIGHT*(i/5)))
+            bp.moveToPoint(CGPointMake(CGFloat(points.0.x-sin(angle)*((RECT_HEIGHT/2)+(RECT_HEIGHT*(i/5)))),CGFloat(points.0.y-cos(angle)*((RECT_HEIGHT/2)+(RECT_HEIGHT*(i/5))))))
+        }
+        return bp
     }
 }

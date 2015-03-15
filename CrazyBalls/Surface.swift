@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import UIKit
+
 
 class Surface:GameObject, ChangeableAngle {
     var bounceCoefficient:Double
@@ -16,6 +18,8 @@ class Surface:GameObject, ChangeableAngle {
     var points:(Vector, Vector)
     
     var fixed:Bool
+    
+    let RECT_HEIGHT:Double = 20
     
     init(fixed:Bool, points:(Vector, Vector)) {
         self.fixed = fixed
@@ -74,7 +78,16 @@ class Surface:GameObject, ChangeableAngle {
         return sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))
     }
     
-    
+    func getBP() -> UIBezierPath {
+        var rect:CGRect
+        var length:Double = getSurfaceVector().getMagnitude()
+        var cx = points.1.x+(points.0.x-points.1.x)
+        var cy = points.1.y+(points.0.y-points.1.y)
+        var bp = UIBezierPath(roundedRect: CGRectMake(CGFloat(cx - length/2), CGFloat(cy-RECT_HEIGHT/2), CGFloat(length), CGFloat(RECT_HEIGHT)), cornerRadius: CGFloat(5))
+        let transform:CGAffineTransform = CGAffineTransformMakeRotation(CGFloat(Double(angle)*(Double(M_PI)/Double(180))))
+        bp.applyTransform(transform)
+        return bp
+    }
     
     
 }

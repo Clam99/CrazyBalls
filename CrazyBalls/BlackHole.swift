@@ -11,13 +11,21 @@ import UIKit
 
 class BlackHole: GameObject {
     let fixed:Bool
+    var x:Double
+    var y:Double
+    let radius:Double = 50.0
+    let strength:Double
     
-    init(fixed:Bool) {
+    init(fixed:Bool, x:Double, y:Double, strength:Double) {
         self.fixed = fixed
+        self.x = x
+        self.y = y
+        self.strength = strength
     }
     
     func getBP() -> UIBezierPath {
-        bp = UIBezierPath(arcCenter: <#CGPoint#>, radius: <#CGFloat#>, startAngle: <#CGFloat#>, endAngle: <#CGFloat#>, clockwise: <#Bool#>))
+        let bp = UIBezierPath(arcCenter: CGPointMake(CGFloat(x), CGFloat(y)), radius: CGFloat(radius), startAngle: CGFloat(0), endAngle: CGFloat(7), clockwise: true)
+        return bp
     }
     
 }

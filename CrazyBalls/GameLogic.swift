@@ -47,7 +47,7 @@ class GameLogic {
                 bouncing = true
             }
             let totalE:Double = (ball.vy*ball.vy*0.5)+(ball.a*(Double(frame.size.height)-ball.y))
-            for surface in surfaces {
+            for surface in ll.surfaces {
                 if surface.isTouchingBall(ball) {
                     bounce(surface,ball: ball)
                     moveBallOut(ball, s: surface)

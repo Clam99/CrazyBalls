@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import UIKit
 
 protocol GameObject {
     var fixed:Bool {get}
+    func getBP() -> UIBezierPath
 }
