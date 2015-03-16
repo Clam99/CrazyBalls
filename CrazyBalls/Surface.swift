@@ -23,9 +23,10 @@ class Surface:GameObject, ChangeableAngle {
     
     init(fixed:Bool, points:(Vector, Vector)) {
         self.fixed = fixed
+        self.points = points
         self.angle = atan((points.0.y-points.1.y)/(points.0.x-points.1.x))
         self.bounceCoefficient = 1.0
-        self.points = points;
+        
     }
     
     func setAngle(val:Double) {
@@ -81,8 +82,8 @@ class Surface:GameObject, ChangeableAngle {
     func getBP() -> UIBezierPath {
         var rect:CGRect
         var length:Double = getSurfaceVector().getMagnitude()
-        var cx = points.1.x+(points.0.x-points.1.x)
-        var cy = points.1.y+(points.0.y-points.1.y)
+        var cx = points.1.x+(points.0.x-points.1.x)/2
+        var cy = points.1.y+(points.0.y-points.1.y)/2
         var bp = UIBezierPath(roundedRect: CGRectMake(CGFloat(cx - length/2), CGFloat(cy-RECT_HEIGHT/2), CGFloat(length), CGFloat(RECT_HEIGHT)), cornerRadius: CGFloat(5))
         let transform:CGAffineTransform = CGAffineTransformMakeRotation(CGFloat(Double(angle)*(Double(M_PI)/Double(180))))
         bp.applyTransform(transform)
