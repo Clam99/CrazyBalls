@@ -9,21 +9,23 @@
 import Foundation
 
 class LevelLayout {
-    var surfaces:[Surface]
-    var blackHoles:[BlackHole]
+    var fixedObjects:[GameObject]
     let numPositionable:[Int] = [Int]()
     
-    init(s:[Surface], b:[BlackHole], movingBlackHoles:Int, movingSprings:Int, movingSurfaces:Int) {
-        surfaces = s
-        blackHoles = b
-        numPositionable[objectKeys.blackHole.rawValue] = movingBlackHoles
-        numPositionable[objectKeys.spring.rawValue] = movingSprings
-        numPositionable[objectKeys.surface.rawValue] = movingSurfaces
+    init(g:[GameObject], movingBlackHoles:Int, movingSprings:Int, movingSurfaces:Int) {
+        fixedObjects = g
+        numPositionable.insert(movingBlackHoles, atIndex: min(numPositionable.count, objectKeys.blackHole.rawValue))
+        numPositionable.insert(movingSprings, atIndex: min(numPositionable.count, objectKeys.spring.rawValue))
+        numPositionable.insert(movingSurfaces, atIndex: min(numPositionable.count, objectKeys.surface.rawValue))
+//        numPositionable[objectKeys.blackHole.rawValue] = movingBlackHoles
+//        numPositionable[objectKeys.spring.rawValue] = movingSprings
+//        numPositionable[objectKeys.surface.rawValue] = movingSurfaces
     }
 }
 
 enum objectKeys:Int {
-    case surface = 0
-    case blackHole = 1
-    case spring = 2
+    case surface
+    case blackHole
+    case spring
+    case keysCount
 }

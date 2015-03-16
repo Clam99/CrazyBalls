@@ -11,10 +11,10 @@ import UIKit
 
 class Spring: Surface, ChangeableAngle {
     
-    init(points:(Vector,Vector)) {
-        super.init(fixed: true, points: points)
+    init(f:Bool, points:(Vector,Vector)) {
+        super.init(fixed: f, points: points)
         angle = 0
-        self.points = (Vector(x:0,y:0), Vector(x:0,y:0))
+        self.points = points
         bounceCoefficient = 1.5
     }
     override func updatePoints() {
@@ -22,9 +22,14 @@ class Spring: Surface, ChangeableAngle {
     }
     override func getBP() -> UIBezierPath {
         var bp = super.getBP()
-        for var i = 0; i<5; i++ {
-            let toAddX = sin(angle)*((RECT_HEIGHT/2)+(RECT_HEIGHT*(i/5)))
-            bp.moveToPoint(CGPointMake(CGFloat(points.0.x-sin(angle)*((RECT_HEIGHT/2)+(RECT_HEIGHT*(i/5)))),CGFloat(points.0.y-cos(angle)*((RECT_HEIGHT/2)+(RECT_HEIGHT*(i/5))))))
+        for var i:Double = 0; i<5; i++ {
+            let toAddX:Double = sin(angle)*(-(RECT_HEIGHT/2)+(RECT_HEIGHT*(i/5)))
+            let toAddY:Double = cos(angle)*(-(RECT_HEIGHT/2)+(RECT_HEIGHT*(i/5)))
+            let initialPoint:CGPoint = CGPointMake(CGFloat(points.0.x+toAddX),CGFloat(points.0.y+toAddY))
+//            println("x: \(initialPoint.x)")
+//            println("y: \(initialPoint.y)")
+            bp.moveToPoint(initialPoint)
+            bp.addLineToPoint(CGPointMake(CGFloat(Double(initialPoint.x) + getSurfaceVector().x), CGFloat(Double(initialPoint.y) + getSurfaceVector().y)))
         }
         return bp
     }

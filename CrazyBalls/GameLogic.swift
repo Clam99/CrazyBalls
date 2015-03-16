@@ -47,10 +47,12 @@ class GameLogic {
                 bouncing = true
             }
             let totalE:Double = (ball.vy*ball.vy*0.5)+(ball.a*(Double(frame.size.height)-ball.y))
-            for surface in ll.surfaces {
-                if surface.isTouchingBall(ball) {
-                    bounce(surface,ball: ball)
-                    moveBallOut(ball, s: surface)
+            for obj in ll.fixedObjects {
+                if let surface = obj as? Surface {
+                    if surface.isTouchingBall(ball) {
+                        bounce(surface,ball: ball)
+                        moveBallOut(ball, s: surface)
+                    }
                 }
             }
         }
@@ -73,7 +75,7 @@ class GameLogic {
     }
     
     func bounce(s:Surface, ball:Ball) {//Reflect ball's velocity over the vector of the surface, using Doubles for more precision
-    
+        println("Bouncing")
         //Taken from here:http: //stackoverflow.com/questions/14885693/how-do-you-reflect-a-vector-over-another-vector
         let vec1:Vector =  Vector(x: ball.vx, y: ball.vy);
         let vec2:Vector = s.getSurfaceVector();
@@ -98,13 +100,17 @@ class GameLogic {
         var new_vx:Double = prA_vx - prB_vx;
         var new_vy:Double = prA_vy - prB_vy;
         
+        new_vx *= s.bounceCoefficient
+        new_vy *= s.bounceCoefficient
+        
         ball.vx = new_vx
         ball.vy = new_vy
     }
     
     class func gameLayoutArray() -> [LevelLayout] {
-        let gla:[LevelLayout] = [LevelLayout(s: [Surface(fixed: true, points: (Vector(x: 0, y:0), Vector(x: Double(UIScreen.mainScreen().bounds.width), y: 150)))], b: [], movingBlackHoles: 2, movingSprings: 0, movingSurfaces: 0)]
+        let gla:[LevelLayout] = [LevelLayout(g: [Surface(fixed: true, points: (Vector(x: 50, y:100), Vector(x: Double(UIScreen.mainScreen().bounds.width), y: 100)))], movingBlackHoles: 2, movingSprings: 0, movingSurfaces: 0)]
         return gla
+        //, Spring(f: true, points: (Vector(x: 500,y: 200),Vector(x: 600,y: 200)))
     }
     
 }

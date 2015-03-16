@@ -52,16 +52,12 @@ class View: UIView {
             UIColor.blackColor().setFill()
             circle.fill()
         }
-        for surface in logic.ll.surfaces {
+        for obj in logic.ll.fixedObjects {
             
             let ctx:CGContext = UIGraphicsGetCurrentContext()
+            UIColor.redColor().setStroke()
+            obj.getBP().stroke()
             
-            CGContextSetLineWidth(ctx, 10)
-            CGContextSetStrokeColorWithColor(ctx, UIColor.blackColor().CGColor)
-            CGContextBeginPath(ctx)
-            CGContextMoveToPoint(ctx, CGFloat(surface.points.0.x), CGFloat(surface.points.0.y))
-            CGContextAddLineToPoint(ctx, CGFloat(surface.points.1.x), CGFloat(surface.points.1.y))
-            CGContextStrokePath(ctx)
         }
         if (isDragging) {
             let ctx:CGContext = UIGraphicsGetCurrentContext()
