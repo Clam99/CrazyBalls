@@ -32,7 +32,7 @@ class Surface:GameObject, ChangeableAngle {
     }
     
     func setAngle(val:Double) {
-        //angle = val
+        angle = val
         updatePoints()
     }
     
@@ -48,9 +48,6 @@ class Surface:GameObject, ChangeableAngle {
     
     func getSurfaceVector() -> Vector {
         var v = Vector.subtract(points.0, v2: points.1)
-        if (v.x < 0 && v.y < 0) {
-            v = Vector.multiply(-1, v: v)
-        }
         return v
     }
     
