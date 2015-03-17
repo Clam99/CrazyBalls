@@ -88,7 +88,7 @@ class Surface:GameObject, ChangeableAngle {
         var length:Double = getSurfaceVector().getMagnitude()
         var cx = points.1.x+(points.0.x-points.1.x)/2
         var cy = points.1.y+(points.0.y-points.1.y)/2
-        println("cx: \(cx) and cy: \(cy)")
+        //println("cx: \(cx) and cy: \(cy)")
         var bp = UIBezierPath(roundedRect: CGRectMake(CGFloat(0-length/2),CGFloat(0-RECT_HEIGHT/2), CGFloat(length), CGFloat(RECT_HEIGHT)), cornerRadius: CGFloat(5))
         let a = CGFloat(Double(angle))
         let transform:CGAffineTransform = CGAffineTransformMakeRotation(a)

@@ -82,7 +82,7 @@ class View: UIView {
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        println("in touchesBegan")
+        //println("in touchesBegan")
         let touch:UITouch = touches.anyObject() as UITouch
         if (isSelecting && Double(touch.locationInView(self).x) > logic.balls[0].x-logic.radius && Double(touch.locationInView(self).x) < logic.balls[0].x+logic.radius && Double(touch.locationInView(self).y) > logic.balls[0].y-logic.radius && Double(touch.locationInView(self).x) < logic.balls[0].x+logic.radius) {
             //println("User is dragging the ball")

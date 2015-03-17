@@ -32,8 +32,8 @@ class Spring: Surface, ChangeableAngle {
                 v = Vector.multiply(-1, v: v)
             }
             let initialPoint:CGPoint = CGPointMake(CGFloat(points.0.x+toAddX),CGFloat(points.0.y+toAddY))
-            println("cx in Spring: \(initialPoint.x+CGFloat(v.x/2))")
-            println("cy in Spring: \(initialPoint.y+CGFloat(v.y/2))")
+            //println("cx in Spring: \(initialPoint.x+CGFloat(v.x/2))")
+            //println("cy in Spring: \(initialPoint.y+CGFloat(v.y/2))")
             bp.moveToPoint(initialPoint)
             bp.addLineToPoint(CGPointMake(CGFloat(Double(initialPoint.x) + v.x), CGFloat(Double(initialPoint.y) + v.y)))
             //println("moving to Point: x: \(getSurfaceVector().x)")

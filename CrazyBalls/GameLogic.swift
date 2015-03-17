@@ -100,11 +100,16 @@ class GameLogic {
         var new_vx:Double = prA_vx - prB_vx;
         var new_vy:Double = prA_vy - prB_vy;
         
-        new_vx *= s.bounceCoefficient
-        new_vy *= s.bounceCoefficient
+        let v = Vector(x: new_vx, y: new_vy)
+        let velocityAwayFromSpring = v.projectOnto(s.getSurfaceVector().leftNormal())
+        let newVAFS = velocityAwayFromSpring.getMagnitude() * s.bounceCoefficient
+        var diffAngle = acos((Vector.dotP(v, v2: s.getSurfaceVector().leftNormal())/(v.getMagnitude()*s.getSurfaceVector().leftNormal().getMagnitude())))
         
-        ball.vx = new_vx
-        ball.vy = new_vy
+        println(diffAngle*(180/M_PI))
+        let newV = newVAFS/cos(diffAngle)
+        let newVector = Vector(x: newV*cos(atan(new_vy/new_vx)), y: newV*sin(atan(new_vy/new_vx)))
+        ball.vx = newVector.x
+        ball.vy = newVector.y
     }
     
     class func gameLayoutArray() -> [LevelLayout] {
