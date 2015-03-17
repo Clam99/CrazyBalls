@@ -11,7 +11,7 @@ class MainMenu: UIView {
     var play = UIButton.buttonWithType(UIButtonType.System) as UIButton
     var h:UILabel = UILabel()
     var title:UILabel = UILabel()
-    var radius:Double = Double(UIScreen.mainScreen().bounds.size.height)/6.6
+    var radius:Double = 50
     
     override init(frame:CGRect) {
         paragraphStyle = NSMutableParagraphStyle()
@@ -81,11 +81,11 @@ class MainMenu: UIView {
         }
         else {
             //super.drawRect(rect)
-            println("in drawRect")
+            //println("in drawRect")
         }
     }
     func showTitle() {
-        println("in showTitle")
+        //println("in showTitle")
         title.frame = CGRectMake(0, frame.size.height/6, frame.size.width, frame.size.height/3)
         
         title.attributedText = NSAttributedString(string: "Crazy Balls", attributes: [NSFontAttributeName:UIFont.systemFontOfSize(frame.size.width/8), NSParagraphStyleAttributeName: paragraphStyle])
@@ -120,7 +120,7 @@ class MainMenu: UIView {
         })
     }
     func playPressed() {
-        println("pressed! Yayayayya")
+        //println("pressed! Yayayayya")
         UIView.animateWithDuration(1, animations: {
             self.title.alpha = 0.0
             self.h.alpha = 0.0

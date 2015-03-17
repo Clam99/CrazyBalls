@@ -75,7 +75,7 @@ class GameLogic {
     }
     
     func bounce(s:Surface, ball:Ball) {//Reflect ball's velocity over the vector of the surface, using Doubles for more precision
-        println("Bouncing")
+        //println("Bouncing")
         //Taken from here:http: //stackoverflow.com/questions/14885693/how-do-you-reflect-a-vector-over-another-vector
         let vec1:Vector =  Vector(x: ball.vx, y: ball.vy);
         let vec2:Vector = s.getSurfaceVector();
@@ -108,7 +108,7 @@ class GameLogic {
     }
     
     class func gameLayoutArray() -> [LevelLayout] {
-        let gla:[LevelLayout] = [LevelLayout(g: [Surface(fixed: true, points: (Vector(x: 50, y:100), Vector(x: Double(UIScreen.mainScreen().bounds.width), y: 100)))], movingBlackHoles: 2, movingSprings: 0, movingSurfaces: 0)]
+        let gla:[LevelLayout] = [LevelLayout(g: [Spring(f: true, points: (Vector(x: 50, y:100), Vector(x: Double(UIScreen.mainScreen().bounds.width), y: 250))), Surface(fixed: true, points: (Vector(x: 100, y:120), Vector(x: 150, y: 250)))], movingBlackHoles: 0, movingSprings: 0, movingSurfaces: 0)]
         return gla
         //, Spring(f: true, points: (Vector(x: 500,y: 200),Vector(x: 600,y: 200)))
     }

@@ -46,6 +46,11 @@ class View: UIView {
     }
     
     override func drawRect(rect: CGRect) {
+        let circle = UIBezierPath(arcCenter: CGPointMake(CGFloat(537), CGFloat(175)), radius: CGFloat(10), startAngle: 0, endAngle: 7, clockwise: true)
+        
+        UIColor.redColor().setFill()
+        circle.fill()
+        
         for ball in logic.balls {
             let circle = UIBezierPath(arcCenter: CGPointMake(CGFloat(ball.x), CGFloat(ball.y)), radius: CGFloat(ball.r), startAngle: 0, endAngle: 7, clockwise: true)
             
