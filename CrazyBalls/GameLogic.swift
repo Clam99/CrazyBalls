@@ -103,7 +103,7 @@ class GameLogic {
         let v = Vector(x: new_vx, y: new_vy)
         let velocityAwayFromSpring = v.projectOnto(s.getSurfaceVector().leftNormal())
         let newVAFS = velocityAwayFromSpring.getMagnitude() * s.bounceCoefficient
-        var diffAngle = acos((Vector.dotP(v, v2: s.getSurfaceVector().leftNormal())/(v.getMagnitude()*s.getSurfaceVector().leftNormal().getMagnitude())))
+        var diffAngle = acos((Vector.dotP(v, v2: velocityAwayFromSpring)/(v.getMagnitude()*velocityAwayFromSpring.getMagnitude())))
         
         println(diffAngle*(180/M_PI))
         let newV = newVAFS/cos(diffAngle)
