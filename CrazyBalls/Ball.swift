@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class Ball {
-    let c:Double = 0.025
+    let c:Double = 0.05
     var x: Double = 0
     var y:Double = 0
     let r:Double = 0
@@ -43,11 +43,19 @@ class Ball {
         a = 9.8*c
     }
     
-    init(x:Double, y:Double, radius:Double, radiansCounterClockwiseFromHorizontal:Double, initialVelocity:Double) {
+    init(x:Double, y:Double, radius:Double radiansCounterClockwiseFromHorizontal:Double, initialVelocity:Double) {
         self.x = x
         self.y = y
         r = radius
         vx = cos(radiansCounterClockwiseFromHorizontal)*initialVelocity
         vy = -1 * sin(radiansCounterClockwiseFromHorizontal)*initialVelocity
+    }
+    
+    func getVelocityAsVector() -> Vector {
+        return Vector(x: vx, y: vy)
+    }
+    func setVelocityToVector(v:Vector) {
+        vx = v.x
+        vy = v.y
     }
 }

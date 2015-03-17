@@ -54,9 +54,18 @@ class GameLogic {
                         moveBallOut(ball, s: surface)
                     }
                 }
+                else if let bh = obj as? BlackHole {
+                    adjustPathTowardBlackHole(bh, b: ball)
+                }
             }
         }
     }
+    
+    func adjustPathTowardBlackHole(bh: BlackHole, b: Ball) {
+        b.setVelocityToVector(b.getVelocityAsVector().addComponentInDirection(Vector.subtract(Vector(x: bh.x, y: bh.y), Vector(x: b.x, y: b.y)), bh.strength))
+    }
+    
+    
     
     func moveBallOut(b:Ball, s:Surface) {
         let collisionPoint:Vector = s.getCoordsCorrespondingToXAndYWithAngle(b.x,y: b.y)//Gets point on surface closest to the ball
@@ -102,14 +111,12 @@ class GameLogic {
         
         let v = Vector(x: new_vx, y: new_vy)
         let velocityAwayFromSpring = v.projectOnto(s.getSurfaceVector().leftNormal())
-        let newVAFS = Vector.multiply(s.bounceCoefficient, v: velocityAwayFromSpring)
+        let newVAFS = Vector.multiply(s.bounceCoefficient, v: velocityAwayFromSpring).getMagnitude()
         //var diffAngle = acos((Vector.dotP(v, v2: velocityAwayFromSpring)/(v.getMagnitude()*velocityAwayFromSpring.getMagnitude())))
         
-        println(diffAngle*(180/M_PI))
-        let y2 = Vector.subtract(v, velocityAwayFromSpring)
-        let newV = Vector.add(y2, newVAFS)
-        ball.vx = newV.x
-        ball.vy = newV.y
+        //println(diffAngle*(180/M_PI))
+        let newV = v.getVectorWithMagnitudeInDirection(s.getSurfaceVector().leftNormal(), mag: newVAFS)
+        ball.setVelocityToVector(newV)
     }
     
     class func gameLayoutArray() -> [LevelLayout] {

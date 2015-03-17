@@ -48,4 +48,22 @@ class Vector {
     class func add(v1:Vector, v2:Vector) -> Vector {
         return Vector(x: v1.x+v2.x, y: v1.y+v2.y)
     }
+    func getVectorWithMagnitudeInDirection(d:Vector, mag:Double) -> Vector {
+        let v = Vector(x: x, y: y)
+        let velocityAwayFromSpring = v.projectOnto(d)
+        let newVAFS = Vector.multiply(mag/velocityAwayFromSpring.getMagnitude(), v: velocityAwayFromSpring)
+        //var diffAngle = acos((Vector.dotP(v, v2: velocityAwayFromSpring)/(v.getMagnitude()*velocityAwayFromSpring.getMagnitude())))
+        
+        let y2 = Vector.subtract(v, velocityAwayFromSpring)
+        let newV = Vector.add(y2, newVAFS)
+        return newV
+    }
+    func multiplyComponentInDirection(d:Vector, mult:Double) {
+        let proj = projectOnto(d).getMagnitude()*mult
+        return getVectorWithMagnitudeInDirection(d, mag: proj)
+    }
+    func addComponentInDirection(d:Vector, toAdd:Double) {
+        let proj = projectOnto(d).getMagnitude()+toAdd
+        return getVectorWithMagnitudeInDirection(d, mag: proj)
+    }
 }
