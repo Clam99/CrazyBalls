@@ -102,14 +102,14 @@ class GameLogic {
         
         let v = Vector(x: new_vx, y: new_vy)
         let velocityAwayFromSpring = v.projectOnto(s.getSurfaceVector().leftNormal())
-        let newVAFS = velocityAwayFromSpring.getMagnitude() * s.bounceCoefficient
+        let newVAFS = Vector.multiply(s.bounceCoefficient, v: velocityAwayFromSpring)
         var diffAngle = acos((Vector.dotP(v, v2: velocityAwayFromSpring)/(v.getMagnitude()*velocityAwayFromSpring.getMagnitude())))
         
         println(diffAngle*(180/M_PI))
-        let newV = newVAFS/cos(diffAngle)
-        let newVector = Vector(x: newV*cos(atan(new_vy/new_vx)), y: newV*sin(atan(new_vy/new_vx)))
-        ball.vx = newVector.x
-        ball.vy = newVector.y
+        let y2 = Vector.subtract(v, velocityAwayFromSpring)
+        let newV = Vector.add(y2, newVAFS)
+        ball.vx = newV.x
+        ball.vy = newV.y
     }
     
     class func gameLayoutArray() -> [LevelLayout] {
