@@ -54,15 +54,15 @@ class Vector {
         let newVAFS = Vector.multiply(mag/velocityAwayFromSpring.getMagnitude(), v: velocityAwayFromSpring)
         //var diffAngle = acos((Vector.dotP(v, v2: velocityAwayFromSpring)/(v.getMagnitude()*velocityAwayFromSpring.getMagnitude())))
         
-        let y2 = Vector.subtract(v, velocityAwayFromSpring)
-        let newV = Vector.add(y2, newVAFS)
+        let y2 = Vector.subtract(v, v2: velocityAwayFromSpring)
+        let newV = Vector.add(y2, v2: newVAFS)
         return newV
     }
-    func multiplyComponentInDirection(d:Vector, mult:Double) {
+    func multiplyComponentInDirection(d:Vector, mult:Double) -> Vector {
         let proj = projectOnto(d).getMagnitude()*mult
         return getVectorWithMagnitudeInDirection(d, mag: proj)
     }
-    func addComponentInDirection(d:Vector, toAdd:Double) {
+    func addComponentInDirection(d:Vector, toAdd:Double) -> Vector {
         let proj = projectOnto(d).getMagnitude()+toAdd
         return getVectorWithMagnitudeInDirection(d, mag: proj)
     }

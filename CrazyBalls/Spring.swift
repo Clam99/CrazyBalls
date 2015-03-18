@@ -15,7 +15,7 @@ class Spring: Surface, ChangeableAngle {
     init(f:Bool, points:(Vector,Vector)) {
         super.init(fixed: f, points: points)
         self.points = points
-        bounceCoefficient = 1.5
+        bounceCoefficient = 5
     }
     override func updatePoints() {
         
@@ -23,7 +23,7 @@ class Spring: Surface, ChangeableAngle {
     override func getBP() -> UIBezierPath {
         var bp = super.getBP()
         for var i:Int = 1; i < NUM_SPRING_LINES; i++ {
-            let toAddX:Double = sin(angle)*(-(RECT_HEIGHT/2)+(RECT_HEIGHT*(Double(i)/5)))
+            let toAddX:Double = -sin(angle)*(-(RECT_HEIGHT/2)+(RECT_HEIGHT*(Double(i)/5)))
             let toAddY:Double = cos(angle)*(-(RECT_HEIGHT/2)+(RECT_HEIGHT*(Double(i)/5)))
             //println("toAddX = \(toAddX)")
             //println("toAddY = \(toAddY)")

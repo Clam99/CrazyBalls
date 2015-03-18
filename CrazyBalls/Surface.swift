@@ -20,14 +20,14 @@ class Surface:GameObject, ChangeableAngle {
     
     var fixed:Bool
     
-    let RECT_HEIGHT:Double = 20
+    let RECT_HEIGHT:Double = 10
     
     init(fixed:Bool, points:(Vector, Vector)) {
         self.fixed = fixed
         self.points = points
         self.angle = atan((points.0.y-points.1.y)/(points.0.x-points.1.x))
         //println("the angle is \(angle*(180/M_PI)) in degrees and \(angle) in radians")
-        self.bounceCoefficient = 1.0
+        self.bounceCoefficient = 0.0
         
     }
     

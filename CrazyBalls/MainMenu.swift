@@ -57,7 +57,7 @@ class MainMenu: UIView {
     }
     
     func createBallBetweenDegrees(min:Double, max:Double) -> Ball {
-        return Ball(x:0, y:0, radius:radius,radiansCounterClockwiseFromHorizontal:(Double(arc4random())%((max-min)*(M_PI/180))+(min)*(M_PI/180)), initialVelocity: 10)
+        return Ball(x:0.0, y:0.0, radius:radius, radiansCounterClockwiseFromHorizontal:(Double(arc4random())%((max-min)*(M_PI/180))+(min)*(M_PI/180)), initialVelocity: 10)
     }
 
 

@@ -11,8 +11,8 @@ import Foundation
 import UIKit
 
 
-class View: UIView {
-    let logic:GameLogic
+class View: UIView, TargetDelegate {
+    var logic:GameLogic
     var timer:NSTimer!
     var gameRunning = false
     var isSelecting = false
@@ -20,18 +20,38 @@ class View: UIView {
     var dragY:Double?
     var isDragging = false
     let c = 0.06
+    let reset:UIButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+    var timer2:NSTimer!
     
     override init(frame:CGRect) {
         logic = GameLogic(frame: frame)
         super.init(frame: frame)
+        logic.delegate = self
         self.opaque = false
         self.backgroundColor = UIColor.clearColor()
         startSelection()
+        
+        let buttonWidth = UIScreen.mainScreen().bounds.width/7
+        let buttonHeight = UIScreen.mainScreen().bounds.height/10
+        reset.frame = CGRectMake(UIScreen.mainScreen().bounds.width-buttonWidth-20, 20, buttonWidth, buttonHeight)
+        addSubview(reset)
+        reset.addTarget(self, action: "resetFunc", forControlEvents: UIControlEvents.TouchUpInside)
+        reset.setTitle("Reset", forState: UIControlState.Normal)
+        reset.titleLabel?.font = UIFont.systemFontOfSize(UIScreen.mainScreen().bounds.width/30)
     }
     
     func startSelection() {//here user places objects and then pulls back and releases the ball
         isSelecting = true
         //startGame()//should be taken out
+    }
+    
+    func resetFunc() {
+        if let s = self.superview {
+            s.addSubview(View(frame: frame))
+        }
+        timer.invalidate()
+        timer = nil
+        removeFromSuperview()
     }
     
     func startGame(shootX:Double, shootY:Double) {
@@ -46,10 +66,6 @@ class View: UIView {
     }
     
     override func drawRect(rect: CGRect) {
-        let circle = UIBezierPath(arcCenter: CGPointMake(CGFloat(537), CGFloat(175)), radius: CGFloat(10), startAngle: 0, endAngle: 7, clockwise: true)
-        
-        UIColor.redColor().setFill()
-        circle.fill()
         
         for ball in logic.balls {
             let circle = UIBezierPath(arcCenter: CGPointMake(CGFloat(ball.x), CGFloat(ball.y)), radius: CGFloat(ball.r), startAngle: 0, endAngle: 7, clockwise: true)
@@ -74,6 +90,12 @@ class View: UIView {
             CGContextAddLineToPoint(ctx, CGFloat(logic.balls[0].x+(logic.balls[0].x-dragX!)), CGFloat(logic.balls[0].y+(logic.balls[0].y-dragY!)))
             CGContextStrokePath(ctx)
         }
+        let goal = UIBezierPath(arcCenter: logic.ll.goal, radius: CGFloat(logic.ll.goalRadius), startAngle: 0, endAngle: 7, clockwise: true)
+        UIColor.greenColor().setStroke()
+        goal.lineWidth = 5
+        goal.stroke()
+        UIColor.whiteColor().setFill()
+        goal.fill()
     }
     
     func update() {
@@ -117,4 +139,32 @@ class View: UIView {
         dragY = nil
     }
     
+    func receiveAction(passedData: String) {
+        if passedData == logic.wonString {
+            showWonMessage()
+        }
+    }
+    
+    func showWonMessage() {
+        timer2 = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "increaseCircle", userInfo: nil, repeats: true)
+        
+    }
+    
+    func increaseCircle() {
+        logic.ll.goalRadius += 5
+        if (logic.ll.goalRadius >= Double(UIScreen.mainScreen().bounds.width*1.2)) {
+            let label = UILabel(frame: self.frame)
+            label.alpha = 0.0
+            let paragraphStyle:NSMutableParagraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = NSTextAlignment.Center
+            label.attributedText = NSAttributedString(string: "You Won!", attributes: [NSFontAttributeName:UIFont.systemFontOfSize(UIScreen.mainScreen().bounds.width/5), NSParagraphStyleAttributeName: paragraphStyle])
+            self.addSubview(label)
+            UIView.animateWithDuration(0.5, animations: {
+                println("showing label")
+                label.alpha = 1.0
+            })
+            timer2.invalidate()
+            timer.invalidate()
+        }
+    }
 }

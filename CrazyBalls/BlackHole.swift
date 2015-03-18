@@ -13,7 +13,7 @@ class BlackHole: GameObject {
     let fixed:Bool
     var x:Double
     var y:Double
-    let radius:Double = 50.0
+    let radius:Double = 20.0
     let strength:Double
     
     init(fixed:Bool, x:Double, y:Double, strength:Double) {

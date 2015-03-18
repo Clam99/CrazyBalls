@@ -14,10 +14,13 @@ class GameLogic {
     let radius = 25.0
     var balls:[Ball]
     var ll:LevelLayout
+    var delegate:TargetDelegate?
+    let wonString = "Won! YAYAY!!"
+    var won = false
     
     init(frame:CGRect) {
         self.frame = frame
-        balls = [Ball(x:Double(frame.size.width)/2, y: Double(frame.size.height)/2, radius: radius)]
+        balls = [Ball(x:radius*5, y: radius*2, radius: radius)]
         ll = GameLogic.gameLayoutArray()[0]
     }
     
@@ -26,26 +29,26 @@ class GameLogic {
             var bouncing = false
             ball.updateVelocity()
             ball.updatePos()
-            if (ball.x+ball.r > Double(frame.size.width)) {
-                ball.x = (Double(frame.size.width)-ball.r) //commenting this out fixes the problem of losing energy for some reason
-                ball.vx *= -1
-                bouncing = true
-            }
-            else if (ball.x-ball.r < 0) {
-                ball.x = ball.r
-                ball.vx *= -1
-                bouncing = true
-            }
-            if (ball.y+ball.r > Double(frame.size.height)) {
-                ball.y = Double(frame.size.height)-ball.r
-                ball.vy *= -1
-                bouncing = true
-            }
-            else if (ball.y-ball.r < 0) {
-                ball.y = ball.r
-                ball.vy *= -1
-                bouncing = true
-            }
+//            if (ball.x+ball.r > Double(frame.size.width)) {
+//                ball.x = (Double(frame.size.width)-ball.r) //commenting this out fixes the problem of losing energy for some reason
+//                ball.vx *= -1
+//                bouncing = true
+//            }
+//            else if (ball.x-ball.r < 0) {
+//                ball.x = ball.r
+//                ball.vx *= -1
+//                bouncing = true
+//            }
+//            if (ball.y+ball.r > Double(frame.size.height)) {
+//                ball.y = Double(frame.size.height)-ball.r
+//                ball.vy *= -1
+//                bouncing = true
+//            }
+//            else if (ball.y-ball.r < 0) {
+//                ball.y = ball.r
+//                ball.vy *= -1
+//                bouncing = true
+//            }
             let totalE:Double = (ball.vy*ball.vy*0.5)+(ball.a*(Double(frame.size.height)-ball.y))
             for obj in ll.fixedObjects {
                 if let surface = obj as? Surface {
@@ -58,16 +61,26 @@ class GameLogic {
                     adjustPathTowardBlackHole(bh, b: ball)
                 }
             }
+            if (Vector.subtract(Vector(x: ball.x,y: ball.y), v2: Vector(x: Double(ll.goal.x), y: Double(ll.goal.y))).getMagnitude() < (ball.r + ll.goalRadius)) {
+                win()
+            }
         }
     }
     
     func adjustPathTowardBlackHole(bh: BlackHole, b: Ball) {
-        let diff = Vector.subtract(Vector(x: bh.x, y: bh.y), Vector(x: b.x, y: b.y))
-    b.setVelocityToVector(b.getVelocityAsVector().addComponentInDirection(diff, bh.strength/(diff.getMagnitude()*diff.getMagnitude())))
+        let diff = Vector.subtract(Vector(x: bh.x, y: bh.y), v2: Vector(x: b.x, y: b.y))
+    b.setVelocityToVector(b.getVelocityAsVector().addComponentInDirection(diff, toAdd: bh.strength/(diff.getMagnitude()*diff.getMagnitude()+0.000001)))
     
     }
     
-    
+    func win() {
+        if (!won) {
+            if let d = delegate {
+                d.receiveAction(wonString)
+            }
+            won = true
+        }
+    }
     
     func moveBallOut(b:Ball, s:Surface) {
         let collisionPoint:Vector = s.getCoordsCorrespondingToXAndYWithAngle(b.x,y: b.y)//Gets point on surface closest to the ball
@@ -117,14 +130,16 @@ class GameLogic {
         //var diffAngle = acos((Vector.dotP(v, v2: velocityAwayFromSpring)/(v.getMagnitude()*velocityAwayFromSpring.getMagnitude())))
         
         //println(diffAngle*(180/M_PI))
-        let newV = v.getVectorWithMagnitudeInDirection(s.getSurfaceVector().leftNormal(), mag: newVAFS)
+        let newV = v.addComponentInDirection(s.getSurfaceVector().leftNormal(), toAdd: s.bounceCoefficient)
         ball.setVelocityToVector(newV)
     }
     
     class func gameLayoutArray() -> [LevelLayout] {
-        let gla:[LevelLayout] = [LevelLayout(g: [Spring(f: true, points: (Vector(x: 50, y:100), Vector(x: Double(UIScreen.mainScreen().bounds.width), y: 250))), Surface(fixed: true, points: (Vector(x: 100, y:120), Vector(x: 150, y: 250)))], movingBlackHoles: 0, movingSprings: 0, movingSurfaces: 0)]
+        let gla:[LevelLayout] = [LevelLayout(g: [Spring(f: true, points: (Vector(x: 50, y:100), Vector(x: Double(150), y: 150)))], movingBlackHoles: 0, movingSprings: 0, movingSurfaces: 0, goal:CGPointMake(UIScreen.mainScreen().bounds.size.width-50, UIScreen.mainScreen().bounds.size.height-50))]
         return gla
         //, Spring(f: true, points: (Vector(x: 500,y: 200),Vector(x: 600,y: 200)))
+        //, Surface(fixed: true, points: (Vector(x: 100, y:120), Vector(x: 150, y: 250)))]
+        //, BlackHole(fixed: true, x: Double(UIScreen.mainScreen().bounds.width/2), y: 50, strength: 10000.0)
     }
     
 }
