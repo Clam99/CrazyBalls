@@ -62,7 +62,9 @@ class GameLogic {
     }
     
     func adjustPathTowardBlackHole(bh: BlackHole, b: Ball) {
-        b.setVelocityToVector(b.getVelocityAsVector().addComponentInDirection(Vector.subtract(Vector(x: bh.x, y: bh.y), Vector(x: b.x, y: b.y)), bh.strength))
+        let diff = Vector.subtract(Vector(x: bh.x, y: bh.y), Vector(x: b.x, y: b.y))
+    b.setVelocityToVector(b.getVelocityAsVector().addComponentInDirection(diff, bh.strength/(diff.getMagnitude()*diff.getMagnitude())))
+    
     }
     
     
