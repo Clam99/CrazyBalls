@@ -49,8 +49,10 @@ class View: UIView, TargetDelegate {
         if let s = self.superview {
             s.addSubview(View(frame: frame))
         }
-        timer.invalidate()
-        timer = nil
+if let t = timer {
+        t.invalidate()
+        t = nil
+}
         removeFromSuperview()
     }
     
