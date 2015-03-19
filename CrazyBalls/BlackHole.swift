@@ -15,6 +15,7 @@ class BlackHole: GameObject {
     var y:Double
     let radius:Double = 20.0
     let strength:Double
+    var done:Bool? = nil
     
     init(fixed:Bool, x:Double, y:Double, strength:Double) {
         self.fixed = fixed

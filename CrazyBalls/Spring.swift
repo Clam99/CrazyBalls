@@ -12,10 +12,10 @@ import UIKit
 class Spring: Surface, ChangeableAngle {
     let NUM_SPRING_LINES:Int = 5
     
-    init(f:Bool, points:(Vector,Vector)) {
-        super.init(fixed: f, points: points)
+    init(f:Bool, points:(Vector,Vector), required:Bool) {
+        super.init(fixed: f, points: points, required: required)
         self.points = points
-        bounceCoefficient = 5
+        bounceCoefficient = Double(UIScreen.mainScreen().bounds.width)/64.0
     }
     override func updatePoints() {
         

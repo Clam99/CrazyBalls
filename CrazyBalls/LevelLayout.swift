@@ -14,8 +14,9 @@ class LevelLayout {
     let numPositionable:[Int] = [Int]()
     let goal:CGPoint
     var goalRadius:Double = 25.0
+    let initialBallPoint:CGPoint
     
-    init(g:[GameObject], movingBlackHoles:Int, movingSprings:Int, movingSurfaces:Int, goal:CGPoint) {
+    init(g:[GameObject], movingBlackHoles:Int, movingSprings:Int, movingSurfaces:Int, goal:CGPoint, iBP:CGPoint) {
         fixedObjects = g
         numPositionable.insert(movingBlackHoles, atIndex: min(numPositionable.count, objectKeys.blackHole.rawValue))
         numPositionable.insert(movingSprings, atIndex: min(numPositionable.count, objectKeys.spring.rawValue))
@@ -24,6 +25,17 @@ class LevelLayout {
 //        numPositionable[objectKeys.spring.rawValue] = movingSprings
 //        numPositionable[objectKeys.surface.rawValue] = movingSurfaces
         self.goal = goal
+        initialBallPoint = iBP
+    }
+    
+    func isFinished() -> Bool {
+        var finished = true
+        for var i:Int = 0; i < fixedObjects.count; i++ {
+            if let d = fixedObjects[i].done {
+                finished = d
+            }
+        }
+        return finished
     }
 }
 

@@ -6,7 +6,7 @@ class MainMenu: UIView {
     var timerCount = 0
     var timer:NSTimer!
     var delegate:TargetDelegate!
-    let maxCount = 100
+    let maxCount = 50
     var paragraphStyle:NSMutableParagraphStyle
     var play = UIButton.buttonWithType(UIButtonType.System) as UIButton
     var h:UILabel = UILabel()
@@ -19,7 +19,7 @@ class MainMenu: UIView {
         super.init(frame: frame)
         backgroundColor = UIColor.whiteColor()
         opaque = false
-        let timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "timerFunc", userInfo: nil, repeats: true)
+        let timer = NSTimer.scheduledTimerWithTimeInterval(0.03, target: self, selector: "timerFunc", userInfo: nil, repeats: true)
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -29,7 +29,7 @@ class MainMenu: UIView {
         super.init(coder: aDecoder)
         backgroundColor = UIColor.whiteColor()
         opaque = false
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "timerFunc", userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.03, target: self, selector: "timerFunc", userInfo: nil, repeats: true)
     }
 
     
@@ -43,9 +43,9 @@ class MainMenu: UIView {
         balls.append(createBallBetweenDegrees(-30.0, max:0.0)) // - append balls facing in random directions
 
         balls.append(createBallBetweenDegrees(-60.0, max:-30.0)) // - append balls facing in random directions
-        balls.append(createBallBetweenDegrees(-90.0, max:-60.0)) // - append balls facing in random directions
-
-            balls.append(createBallBetweenDegrees(-60.0, max:0.0))
+        balls.append(createBallBetweenDegrees(-90.0, max:0)) // - append balls facing in random directions
+        balls.append(createBallBetweenDegrees(-60.0, max:0.0))
+        balls.append(createBallBetweenDegrees(-60.0, max:0.0))
 
         }
         else if (timerCount==maxCount) {

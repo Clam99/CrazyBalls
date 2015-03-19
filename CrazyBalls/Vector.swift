@@ -66,4 +66,8 @@ class Vector {
         let proj = projectOnto(d).getMagnitude()+toAdd
         return getVectorWithMagnitudeInDirection(d, mag: proj)
     }
+    func setMagnitude(mag:Double) {
+        x = Vector.multiply(mag/getMagnitude(), v: self).x
+        y = Vector.multiply(mag/getMagnitude(), v: self).y
+    }
 }

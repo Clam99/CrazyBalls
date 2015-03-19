@@ -11,5 +11,6 @@ import UIKit
 
 protocol GameObject {
     var fixed:Bool {get}
+    var done:Bool? {get set}
     func getBP() -> UIBezierPath
 }

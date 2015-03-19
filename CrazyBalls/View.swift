@@ -16,12 +16,13 @@ class View: UIView, TargetDelegate {
     var timer:NSTimer!
     var gameRunning = false
     var isSelecting = false
-    var dragX:Double?
-    var dragY:Double?
+    var dragVector:Vector?
     var isDragging = false
     let c = 0.06
     let reset:UIButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
     var timer2:NSTimer!
+    var labelShown:Bool = false
+    var maxPullBack:Double = Double(UIScreen.mainScreen().bounds.width)/10.0
     
     override init(frame:CGRect) {
         logic = GameLogic(frame: frame)
@@ -49,10 +50,9 @@ class View: UIView, TargetDelegate {
         if let s = self.superview {
             s.addSubview(View(frame: frame))
         }
-if let t = timer {
-        t.invalidate()
-        t = nil
-}
+        if var t = timer {
+            t.invalidate()
+        }
         removeFromSuperview()
     }
     
@@ -76,9 +76,17 @@ if let t = timer {
             circle.fill()
         }
         for obj in logic.ll.fixedObjects {
-            
-            let ctx:CGContext = UIGraphicsGetCurrentContext()
-            UIColor.redColor().setStroke()
+            if let d = obj.done {
+                if (d) {
+                    UIColor.greenColor().setStroke()
+                }
+                else {
+                    UIColor.purpleColor().setStroke()
+                }
+            }
+            else {
+                UIColor.redColor().setStroke()
+            }
             obj.getBP().stroke()
             
         }
@@ -89,7 +97,7 @@ if let t = timer {
             CGContextSetStrokeColorWithColor(ctx, UIColor.blueColor().CGColor)
             CGContextBeginPath(ctx)
             CGContextMoveToPoint(ctx, CGFloat(logic.balls[0].x), CGFloat(logic.balls[0].y))
-            CGContextAddLineToPoint(ctx, CGFloat(logic.balls[0].x+(logic.balls[0].x-dragX!)), CGFloat(logic.balls[0].y+(logic.balls[0].y-dragY!)))
+            CGContextAddLineToPoint(ctx, CGFloat(logic.balls[0].x+(logic.balls[0].x-dragVector!.x)), CGFloat(logic.balls[0].y+(logic.balls[0].y-dragVector!.y)))
             CGContextStrokePath(ctx)
         }
         let goal = UIBezierPath(arcCenter: logic.ll.goal, radius: CGFloat(logic.ll.goalRadius), startAngle: 0, endAngle: 7, clockwise: true)
@@ -110,8 +118,7 @@ if let t = timer {
         let touch:UITouch = touches.anyObject() as UITouch
         if (isSelecting && Double(touch.locationInView(self).x) > logic.balls[0].x-logic.radius && Double(touch.locationInView(self).x) < logic.balls[0].x+logic.radius && Double(touch.locationInView(self).y) > logic.balls[0].y-logic.radius && Double(touch.locationInView(self).x) < logic.balls[0].x+logic.radius) {
             //println("User is dragging the ball")
-            dragX = Double(touch.locationInView(self).x)
-            dragY = Double(touch.locationInView(self).y)
+            dragVector = Vector(x: Double(touch.locationInView(self).x), y: Double(touch.locationInView(self).y))
             isDragging = true
             setNeedsDisplay()
         }
@@ -121,11 +128,14 @@ if let t = timer {
         let touch:UITouch = touches.anyObject() as UITouch
         if (isDragging) {
             //println("You seem to be moving it.  you are at an x val of \(Double(touch.locationInView(self).x))")
-            if ((dragX) != nil) {
-                dragX = Double(touch.locationInView(self).x)
+            if ((dragVector) != nil) {
+                dragVector!.x = Double(touch.locationInView(self).x)
             }
-            if (dragY != nil) {
-                dragY = Double(touch.locationInView(self).y)
+            if (dragVector != nil) {
+                dragVector!.y = Double(touch.locationInView(self).y)
+            }
+            if (dragVector != nil && dragVector!.getMagnitude() > maxPullBack) {
+                dragVector!.setMagnitude(maxPullBack)
             }
             setNeedsDisplay()
         }
@@ -134,11 +144,10 @@ if let t = timer {
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
         isDragging = false
         setNeedsDisplay()
-        if (dragX != nil && dragY != nil) {
-            startGame((logic.balls[0].x-dragX!), shootY: (logic.balls[0].y-dragY!))
+        if (dragVector != nil) {
+            startGame((logic.balls[0].x-dragVector!.x), shootY: (logic.balls[0].y-dragVector!.y))
         }
-        dragX = nil
-        dragY = nil
+        dragVector = nil
     }
     
     func receiveAction(passedData: String) {
@@ -153,18 +162,21 @@ if let t = timer {
     }
     
     func increaseCircle() {
-        logic.ll.goalRadius += 5
-        if (logic.ll.goalRadius >= Double(UIScreen.mainScreen().bounds.width*1.2)) {
+        logic.ll.goalRadius += Double(UIScreen.mainScreen().bounds.width)/32.0
+        if (logic.ll.goalRadius >= Double(UIScreen.mainScreen().bounds.width*0.8) && !labelShown) {
             let label = UILabel(frame: self.frame)
             label.alpha = 0.0
             let paragraphStyle:NSMutableParagraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = NSTextAlignment.Center
-            label.attributedText = NSAttributedString(string: "You Won!", attributes: [NSFontAttributeName:UIFont.systemFontOfSize(UIScreen.mainScreen().bounds.width/5), NSParagraphStyleAttributeName: paragraphStyle])
+            label.attributedText = NSAttributedString(string: "clear", attributes: [NSFontAttributeName:UIFont.systemFontOfSize(UIScreen.mainScreen().bounds.width/7), NSParagraphStyleAttributeName: paragraphStyle])
             self.addSubview(label)
             UIView.animateWithDuration(0.5, animations: {
-                println("showing label")
+                //println("showing label")
                 label.alpha = 1.0
             })
+            labelShown = true
+        }
+        if (logic.ll.goalRadius >= Double(UIScreen.mainScreen().bounds.width*1.2)) {
             timer2.invalidate()
             timer.invalidate()
         }

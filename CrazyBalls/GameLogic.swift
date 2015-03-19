@@ -20,8 +20,8 @@ class GameLogic {
     
     init(frame:CGRect) {
         self.frame = frame
-        balls = [Ball(x:radius*5, y: radius*2, radius: radius)]
         ll = GameLogic.gameLayoutArray()[0]
+        balls = [Ball(x:Double(ll.initialBallPoint.x), y: Double(ll.initialBallPoint.y), radius: radius)]
     }
     
     func updateLogic() {
@@ -74,7 +74,7 @@ class GameLogic {
     }
     
     func win() {
-        if (!won) {
+        if (!won && ll.isFinished()) {
             if let d = delegate {
                 d.receiveAction(wonString)
             }
@@ -132,10 +132,13 @@ class GameLogic {
         //println(diffAngle*(180/M_PI))
         let newV = v.addComponentInDirection(s.getSurfaceVector().leftNormal(), toAdd: s.bounceCoefficient)
         ball.setVelocityToVector(newV)
+        if (s.done != nil) {
+            s.done = true
+        }
     }
     
     class func gameLayoutArray() -> [LevelLayout] {
-        let gla:[LevelLayout] = [LevelLayout(g: [Spring(f: true, points: (Vector(x: 50, y:100), Vector(x: Double(150), y: 150)))], movingBlackHoles: 0, movingSprings: 0, movingSurfaces: 0, goal:CGPointMake(UIScreen.mainScreen().bounds.size.width-50, UIScreen.mainScreen().bounds.size.height-50))]
+        let gla:[LevelLayout] = [LevelLayout(g: [Spring(f: true, points: (Vector(x: 50, y:100), Vector(x: Double(150), y: 150)), required:true)], movingBlackHoles: 0, movingSprings: 0, movingSurfaces: 0, goal:CGPointMake(UIScreen.mainScreen().bounds.size.width-50, UIScreen.mainScreen().bounds.size.height-50), iBP: CGPointMake(CGFloat(UIScreen.mainScreen().bounds.width/2), UIScreen.mainScreen().bounds.height/2))]
         return gla
         //, Spring(f: true, points: (Vector(x: 500,y: 200),Vector(x: 600,y: 200)))
         //, Surface(fixed: true, points: (Vector(x: 100, y:120), Vector(x: 150, y: 250)))]
