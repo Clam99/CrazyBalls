@@ -148,7 +148,7 @@ if let t = timer {
     }
     
     func showWonMessage() {
-        timer2 = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "increaseCircle", userInfo: nil, repeats: true)
+        timer2 = NSTimer.scheduledTimerWithTimeInterval(0.02, target: self, selector: "increaseCircle", userInfo: nil, repeats: true)
         
     }
     
