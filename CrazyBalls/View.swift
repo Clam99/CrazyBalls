@@ -22,7 +22,7 @@ class View: UIView, TargetDelegate {
     let reset:UIButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
     var timer2:NSTimer!
     var labelShown:Bool = false
-    var maxPullBack:Double = Double(UIScreen.mainScreen().bounds.width)/10.0
+    var maxPullBack:Double = Double(UIScreen.mainScreen().bounds.width)/3
     
     override init(frame:CGRect) {
         logic = GameLogic(frame: frame)
@@ -134,8 +134,11 @@ class View: UIView, TargetDelegate {
             if (dragVector != nil) {
                 dragVector!.y = Double(touch.locationInView(self).y)
             }
-            if (dragVector != nil && dragVector!.getMagnitude() > maxPullBack) {
-                dragVector!.setMagnitude(maxPullBack)
+            let v = Vector.subtract(dragVector!, v2: Vector(x: logic.balls[0].x, y: logic.balls[0].y))
+            if (dragVector != nil && v.getMagnitude() > maxPullBack) {
+                v.setMagnitude(maxPullBack)
+                dragVector = Vector.add(v, v2: Vector(x: logic.balls[0].x, y: logic.balls[0].y))
+                //println("You've gone too far")
             }
             setNeedsDisplay()
         }
