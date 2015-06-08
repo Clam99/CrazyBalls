@@ -8,7 +8,7 @@ class MainMenu: UIView {
     var delegate:TargetDelegate!
     let maxCount = 50
     var paragraphStyle:NSMutableParagraphStyle
-    var play = UIButton.buttonWithType(UIButtonType.System) as UIButton
+    var play = UIButton.buttonWithType(UIButtonType.System) as! UIButton
     var h:UILabel = UILabel()
     var title:UILabel = UILabel()
     var radius:Double = 50

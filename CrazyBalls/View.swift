@@ -19,7 +19,7 @@ class View: UIView, TargetDelegate {
     var dragVector:Vector?
     var isDragging = false
     let c = 0.06
-    let reset:UIButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+    let reset:UIButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
     var timer2:NSTimer!
     var labelShown:Bool = false
     var maxPullBack:Double = Double(UIScreen.mainScreen().bounds.width)/3
@@ -113,38 +113,40 @@ class View: UIView, TargetDelegate {
         setNeedsDisplay()
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         //println("in touchesBegan")
-        let touch:UITouch = touches.anyObject() as UITouch
-        if (isSelecting && Double(touch.locationInView(self).x) > logic.balls[0].x-logic.radius && Double(touch.locationInView(self).x) < logic.balls[0].x+logic.radius && Double(touch.locationInView(self).y) > logic.balls[0].y-logic.radius && Double(touch.locationInView(self).x) < logic.balls[0].x+logic.radius) {
-            //println("User is dragging the ball")
-            dragVector = Vector(x: Double(touch.locationInView(self).x), y: Double(touch.locationInView(self).y))
-            isDragging = true
-            setNeedsDisplay()
+        if let touch:UITouch = touches.first as? UITouch {
+            if (isSelecting && Double(touch.locationInView(self).x) > logic.balls[0].x-logic.radius && Double(touch.locationInView(self).x) < logic.balls[0].x+logic.radius && Double(touch.locationInView(self).y) > logic.balls[0].y-logic.radius && Double(touch.locationInView(self).x) < logic.balls[0].x+logic.radius) {
+                //println("User is dragging the ball")
+                dragVector = Vector(x: Double(touch.locationInView(self).x), y: Double(touch.locationInView(self).y))
+                isDragging = true
+                setNeedsDisplay()
+            }
         }
     }
     
-    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
-        let touch:UITouch = touches.anyObject() as UITouch
-        if (isDragging) {
-            //println("You seem to be moving it.  you are at an x val of \(Double(touch.locationInView(self).x))")
-            if ((dragVector) != nil) {
-                dragVector!.x = Double(touch.locationInView(self).x)
+    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+        if let touch:UITouch = touches.first as? UITouch {
+            if (isDragging) {
+                //println("You seem to be moving it.  you are at an x val of \(Double(touch.locationInView(self).x))")
+                if ((dragVector) != nil) {
+                    dragVector!.x = Double(touch.locationInView(self).x)
+                }
+                if (dragVector != nil) {
+                    dragVector!.y = Double(touch.locationInView(self).y)
+                }
+                let v = Vector.subtract(dragVector!, v2: Vector(x: logic.balls[0].x, y: logic.balls[0].y))
+                if (dragVector != nil && v.getMagnitude() > maxPullBack) {
+                    v.setMagnitude(maxPullBack)
+                    dragVector = Vector.add(v, v2: Vector(x: logic.balls[0].x, y: logic.balls[0].y))
+                    //println("You've gone too far")
+                }
+                setNeedsDisplay()
             }
-            if (dragVector != nil) {
-                dragVector!.y = Double(touch.locationInView(self).y)
-            }
-            let v = Vector.subtract(dragVector!, v2: Vector(x: logic.balls[0].x, y: logic.balls[0].y))
-            if (dragVector != nil && v.getMagnitude() > maxPullBack) {
-                v.setMagnitude(maxPullBack)
-                dragVector = Vector.add(v, v2: Vector(x: logic.balls[0].x, y: logic.balls[0].y))
-                //println("You've gone too far")
-            }
-            setNeedsDisplay()
         }
     }
     
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         isDragging = false
         setNeedsDisplay()
         if (dragVector != nil) {

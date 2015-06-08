@@ -13,10 +13,10 @@ class Ball {
     let c:Double = 0.05
     var x: Double = 0
     var y:Double = 0
-    let r:Double = 0
+    let r:Double
     var vx:Double = 10
     var vy:Double = 0
-    let a:Double = 0
+    let a:Double
 
 
     func updateVelocity() {//Updates Ball's velocity based on acceleration. Called before updatePos each tick.
@@ -34,10 +34,10 @@ class Ball {
         
     }
 
-    init(x:Double, y:Double, radius:Double) {
+     init(x:Double, y:Double, radius:Double) {
         self.x = x
         self.y = y
-        r = radius
+        self.r = radius
         vx = (10.0*c)
         vy = 0
         a = 9.8*c
@@ -49,6 +49,7 @@ class Ball {
         r = radius
         vx = cos(radiansCounterClockwiseFromHorizontal)*initialVelocity
         vy = -1 * sin(radiansCounterClockwiseFromHorizontal)*initialVelocity
+        a = 0
     }
     
     func getVelocityAsVector() -> Vector {

@@ -11,12 +11,12 @@ import UIKit
 
 class LevelLayout {
     var fixedObjects:[GameObject]
-    let numPositionable:[Int] = [Int]()
+    var numPositionable:[Int] = [Int]()
     let goal:CGPoint
     var goalRadius:Double = 25.0
     let initialBallPoint:CGPoint
     
-    init(g:[GameObject], movingBlackHoles:Int, movingSprings:Int, movingSurfaces:Int, goal:CGPoint, iBP:CGPoint) {
+     init(g:[GameObject], movingBlackHoles:Int, movingSprings:Int, movingSurfaces:Int, goal:CGPoint, iBP:CGPoint) {
         fixedObjects = g
         numPositionable.insert(movingBlackHoles, atIndex: min(numPositionable.count, objectKeys.blackHole.rawValue))
         numPositionable.insert(movingSprings, atIndex: min(numPositionable.count, objectKeys.spring.rawValue))
