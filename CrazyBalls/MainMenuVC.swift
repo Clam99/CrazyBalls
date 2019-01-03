@@ -24,23 +24,23 @@ class MainMenuVC: UIViewController, TargetDelegate {
         self.view = menu
     }*/
     
-    func receiveAction(passedData:String) {
+    func receiveAction(_ passedData:String) {
         if let definiteCase = ButtonLayout(rawValue: passedData) {
             switch definiteCase {
                 case .allHidden:
-                    UIView.animateWithDuration(1.5, animations: {
+                    UIView.animate(withDuration: 1.5, animations: {
                         self.titleLabel.alpha = 0.0
                         self.playBut.alpha = 0.0
                         self.highscoreText.alpha = 0.0
                     })
                 case .justTitle:
-                    UIView.animateWithDuration(1.5, animations: {
+                    UIView.animate(withDuration: 1.5, animations: {
                         self.titleLabel.alpha = 1.0
                         self.playBut.alpha = 0.0
                         self.highscoreText.alpha = 0.0
                     })
                 case .allShown:
-                    UIView.animateWithDuration(1.5, animations: {
+                    UIView.animate(withDuration: 1.5, animations: {
                         self.titleLabel.alpha = 1.0
                         self.playBut.alpha = 1.0
                         self.highscoreText.alpha = 1.0

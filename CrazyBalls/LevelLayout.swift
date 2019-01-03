@@ -18,9 +18,9 @@ class LevelLayout {
     
      init(g:[GameObject], movingBlackHoles:Int, movingSprings:Int, movingSurfaces:Int, goal:CGPoint, iBP:CGPoint) {
         fixedObjects = g
-        numPositionable.insert(movingBlackHoles, atIndex: min(numPositionable.count, objectKeys.blackHole.rawValue))
-        numPositionable.insert(movingSprings, atIndex: min(numPositionable.count, objectKeys.spring.rawValue))
-        numPositionable.insert(movingSurfaces, atIndex: min(numPositionable.count, objectKeys.surface.rawValue))
+        numPositionable.insert(movingBlackHoles, at: min(numPositionable.count, objectKeys.blackHole.rawValue))
+        numPositionable.insert(movingSprings, at: min(numPositionable.count, objectKeys.spring.rawValue))
+        numPositionable.insert(movingSurfaces, at: min(numPositionable.count, objectKeys.surface.rawValue))
 //        numPositionable[objectKeys.blackHole.rawValue] = movingBlackHoles
 //        numPositionable[objectKeys.spring.rawValue] = movingSprings
 //        numPositionable[objectKeys.surface.rawValue] = movingSurfaces
@@ -30,7 +30,7 @@ class LevelLayout {
     
     func isFinished() -> Bool {
         var finished = true
-        for var i:Int = 0; i < fixedObjects.count; i++ {
+        for i:Int in 0 ..< fixedObjects.count {
             if let d = fixedObjects[i].done {
                 finished = d
             }

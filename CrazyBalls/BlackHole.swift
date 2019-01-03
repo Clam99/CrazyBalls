@@ -25,7 +25,7 @@ class BlackHole: GameObject {
     }
     
     func getBP() -> UIBezierPath {
-        let bp = UIBezierPath(arcCenter: CGPointMake(CGFloat(x), CGFloat(y)), radius: CGFloat(radius), startAngle: CGFloat(0), endAngle: CGFloat(7), clockwise: true)
+        let bp = UIBezierPath(arcCenter: CGPoint(x: CGFloat(x), y: CGFloat(y)), radius: CGFloat(radius), startAngle: CGFloat(0), endAngle: CGFloat(7), clockwise: true)
         return bp
     }
     

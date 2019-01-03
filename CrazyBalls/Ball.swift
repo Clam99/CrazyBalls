@@ -55,7 +55,7 @@ class Ball {
     func getVelocityAsVector() -> Vector {
         return Vector(x: vx, y: vy)
     }
-    func setVelocityToVector(v:Vector) {
+    func setVelocityToVector(_ v:Vector) {
         vx = v.x
         vy = v.y
     }

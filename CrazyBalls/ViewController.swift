@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let v = View(frame: CGRectMake(0, 0, view.frame.size.width, view.frame.size.height));
+        let v = View(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height));
         view.addSubview(v);
         view.setNeedsDisplay()
         

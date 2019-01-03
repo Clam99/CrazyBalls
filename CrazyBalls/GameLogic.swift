@@ -67,7 +67,7 @@ class GameLogic {
         }
     }
     
-    func adjustPathTowardBlackHole(bh: BlackHole, b: Ball) {
+    func adjustPathTowardBlackHole(_ bh: BlackHole, b: Ball) {
         let diff = Vector.subtract(Vector(x: bh.x, y: bh.y), v2: Vector(x: b.x, y: b.y))
     b.setVelocityToVector(b.getVelocityAsVector().addComponentInDirection(diff, toAdd: bh.strength/(diff.getMagnitude()*diff.getMagnitude()+0.000001)))
     
@@ -82,23 +82,23 @@ class GameLogic {
         }
     }
     
-    func moveBallOut(b:Ball, s:Surface) {
+    func moveBallOut(_ b:Ball, s:Surface) {
         let collisionPoint:Vector = s.getCoordsCorrespondingToXAndYWithAngle(b.x,y: b.y)//Gets point on surface closest to the ball
         if (b.x-collisionPoint.x >= 0) {//if ball is on the right side of the surface, move right
-            b.x = collisionPoint.x + b.r * cos((90*(M_PI/180))-s.angle)
+            b.x = collisionPoint.x + b.r * cos((90*(Double.pi/180))-s.angle)
         }
         else {//otherwise, move left
-            b.x = collisionPoint.x - b.r * cos((90*(M_PI/180))-s.angle)
+            b.x = collisionPoint.x - b.r * cos((90*(Double.pi/180))-s.angle)
         }
         if (b.y-collisionPoint.y >= 0) {//If ball is below, move down (to a higher y value)
-            b.y = (collisionPoint.y + b.r * sin((90*(M_PI/180)) - s.angle))
+            b.y = (collisionPoint.y + b.r * sin((90*(Double.pi/180)) - s.angle))
         }
         else {//otherwise, move up
-            b.y = (collisionPoint.y - b.r * sin((90*(M_PI/180)) - s.angle))
+            b.y = (collisionPoint.y - b.r * sin((90*(Double.pi/180)) - s.angle))
         }
     }
     
-    func bounce(s:Surface, ball:Ball) {//Reflect ball's velocity over the vector of the surface, using Doubles for more precision
+    func bounce(_ s:Surface, ball:Ball) {//Reflect ball's velocity over the vector of the surface, using Doubles for more precision
         //println("Bouncing")
         //Taken from here:http: //stackoverflow.com/questions/14885693/how-do-you-reflect-a-vector-over-another-vector
         let vec1:Vector =  Vector(x: ball.vx, y: ball.vy);
@@ -106,23 +106,23 @@ class GameLogic {
     
         // 1. Find the dot product of vec1 and vec2
         // Note: dx and dy are vx and vy divided over the length of the vector (magnitude)
-        var dpA:Double = vec1.x * vec2.unitVector().x + vec1.y * vec2.unitVector().y;
+        let dpA:Double = vec1.x * vec2.unitVector().x + vec1.y * vec2.unitVector().y;
         
         // 2. Project vec1 over vec2
-        var prA_vx:Double = dpA * vec2.unitVector().x;
-        var prA_vy:Double = dpA * vec2.unitVector().y;
+        let prA_vx:Double = dpA * vec2.unitVector().x;
+        let prA_vy:Double = dpA * vec2.unitVector().y;
         
         // 3. Find the dot product of vec1 and vec2's normal
         // (left or right normal depending on line's direction, let's say left)
-        var dpB:Double = vec1.x * vec2.leftNormal().unitVector().x + vec1.y * vec2.leftNormal().unitVector().y;
+        let dpB:Double = vec1.x * vec2.leftNormal().unitVector().x + vec1.y * vec2.leftNormal().unitVector().y;
         
         // 4. Project vec1 over vec2's left normal
-        var prB_vx:Double = dpB * vec2.leftNormal().unitVector().x;
-        var prB_vy:Double = dpB * vec2.leftNormal().unitVector().y;
+        let prB_vx:Double = dpB * vec2.leftNormal().unitVector().x;
+        let prB_vy:Double = dpB * vec2.leftNormal().unitVector().y;
         //println(vec2.leftNormal().unitVector().y)
         // 5. Add the first projection prA to the reverse of the second -prB
-        var new_vx:Double = prA_vx - prB_vx;
-        var new_vy:Double = prA_vy - prB_vy;
+        let new_vx:Double = prA_vx - prB_vx;
+        let new_vy:Double = prA_vy - prB_vy;
         
         let v = Vector(x: new_vx, y: new_vy)
         let velocityAwayFromSpring = v.projectOnto(s.getSurfaceVector().leftNormal())
@@ -138,7 +138,7 @@ class GameLogic {
     }
     
     class func gameLayoutArray() -> [LevelLayout] {
-        let gla:[LevelLayout] = [LevelLayout(g: [Spring(f: true, points: (Vector(x: 50, y:100), Vector(x: Double(150), y: 150)), required:true)], movingBlackHoles: 0, movingSprings: 0, movingSurfaces: 0, goal:CGPointMake(UIScreen.mainScreen().bounds.size.width-50, UIScreen.mainScreen().bounds.size.height-50), iBP: CGPointMake(CGFloat(UIScreen.mainScreen().bounds.width/2), UIScreen.mainScreen().bounds.height/2))]
+        let gla:[LevelLayout] = [LevelLayout(g: [Spring(f: true, points: (Vector(x: 50, y:100), Vector(x: Double(150), y: 150)), required:true)], movingBlackHoles: 0, movingSprings: 0, movingSurfaces: 0, goal:CGPoint(x: UIScreen.main.bounds.size.width-50, y: UIScreen.main.bounds.size.height-50), iBP: CGPoint(x: CGFloat(UIScreen.main.bounds.width/2), y: UIScreen.main.bounds.height/2))]
         return gla
         //, Spring(f: true, points: (Vector(x: 500,y: 200),Vector(x: 600,y: 200)))
         //, Surface(fixed: true, points: (Vector(x: 100, y:120), Vector(x: 150, y: 250)))]

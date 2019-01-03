@@ -9,20 +9,20 @@
 import Foundation
 import UIKit
 
-class Spring: Surface, ChangeableAngle {
+class Spring: Surface {
     let NUM_SPRING_LINES:Int = 5
     
     init(f:Bool, points:(Vector,Vector), required:Bool) {
         super.init(fixed: f, points: points, required: required)
         self.points = points
-        bounceCoefficient = Double(UIScreen.mainScreen().bounds.width)/64.0
+        bounceCoefficient = Double(UIScreen.main.bounds.width)/64.0
     }
     override func updatePoints() {
         
     }
     override func getBP() -> UIBezierPath {
-        var bp = super.getBP()
-        for var i:Int = 1; i < NUM_SPRING_LINES; i++ {
+        let bp = super.getBP()
+        for i:Int in 1 ..< NUM_SPRING_LINES {
             let toAddX:Double = -sin(angle)*(-(RECT_HEIGHT/2)+(RECT_HEIGHT*(Double(i)/5)))
             let toAddY:Double = cos(angle)*(-(RECT_HEIGHT/2)+(RECT_HEIGHT*(Double(i)/5)))
             //println("toAddX = \(toAddX)")
@@ -31,11 +31,11 @@ class Spring: Surface, ChangeableAngle {
             if (v.x < 0 && v.y < 0) {
                 v = Vector.multiply(-1, v: v)
             }
-            let initialPoint:CGPoint = CGPointMake(CGFloat(points.0.x+toAddX),CGFloat(points.0.y+toAddY))
+            let initialPoint:CGPoint = CGPoint(x: CGFloat(points.0.x+toAddX),y: CGFloat(points.0.y+toAddY))
             //println("cx in Spring: \(initialPoint.x+CGFloat(v.x/2))")
             //println("cy in Spring: \(initialPoint.y+CGFloat(v.y/2))")
-            bp.moveToPoint(initialPoint)
-            bp.addLineToPoint(CGPointMake(CGFloat(Double(initialPoint.x) + v.x), CGFloat(Double(initialPoint.y) + v.y)))
+            bp.move(to: initialPoint)
+            bp.addLine(to: CGPoint(x: CGFloat(Double(initialPoint.x) + v.x), y: CGFloat(Double(initialPoint.y) + v.y)))
             //println("moving to Point: x: \(getSurfaceVector().x)")
             //println("y: \(getSurfaceVector().y)")
         }

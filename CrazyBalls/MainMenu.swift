@@ -4,37 +4,37 @@ import UIKit
 class MainMenu: UIView {
     var balls:[Ball]! = []
     var timerCount = 0
-    var timer:NSTimer!
+    var timer:Timer!
     var delegate:TargetDelegate!
     let maxCount = 50
     var paragraphStyle:NSMutableParagraphStyle
-    var play = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+    var play = UIButton(type:UIButtonType.system)
     var h:UILabel = UILabel()
     var title:UILabel = UILabel()
     var radius:Double = 50
     
     override init(frame:CGRect) {
         paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = NSTextAlignment.Center
+        paragraphStyle.alignment = NSTextAlignment.center
         super.init(frame: frame)
-        backgroundColor = UIColor.whiteColor()
-        opaque = false
-        let timer = NSTimer.scheduledTimerWithTimeInterval(0.03, target: self, selector: "timerFunc", userInfo: nil, repeats: true)
+        backgroundColor = UIColor.white
+        isOpaque = false
+        _ = Timer.scheduledTimer(timeInterval: 0.03, target: self, selector: #selector(MainMenu.timerFunc), userInfo: nil, repeats: true)
     }
 
     required init(coder aDecoder: NSCoder) {
         //fatalError("init(coder:) has not been implemented")
         paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = NSTextAlignment.Center
-        super.init(coder: aDecoder)
-        backgroundColor = UIColor.whiteColor()
-        opaque = false
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.03, target: self, selector: "timerFunc", userInfo: nil, repeats: true)
+        paragraphStyle.alignment = NSTextAlignment.center
+        super.init(coder: aDecoder)!//Check this
+        backgroundColor = UIColor.white
+        isOpaque = false
+        timer = Timer.scheduledTimer(timeInterval: 0.03, target: self, selector: #selector(MainMenu.timerFunc), userInfo: nil, repeats: true)
     }
 
     
     func timerFunc() {
-        timerCount++
+        timerCount += 1
         for ball in balls {
             ball.updateVelocity()
             ball.updatePos()
@@ -49,15 +49,15 @@ class MainMenu: UIView {
 
         }
         else if (timerCount==maxCount) {
-            NSTimer.scheduledTimerWithTimeInterval(4, target: self, selector: "stopTimer", userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(MainMenu.stopTimer), userInfo: nil, repeats: false)
             showTitle()
         }
         
         setNeedsDisplay()
     }
     
-    func createBallBetweenDegrees(min:Double, max:Double) -> Ball {
-        return Ball(x:0.0, y:0.0, radius:radius, radiansCounterClockwiseFromHorizontal:(Double(arc4random())%((max-min)*(M_PI/180))+(min)*(M_PI/180)), initialVelocity: 10)
+    func createBallBetweenDegrees(_ min:Double, max:Double) -> Ball {
+        return Ball(x:0.0, y:0.0, radius:radius, radiansCounterClockwiseFromHorizontal:(Double(arc4random()).truncatingRemainder(dividingBy: ((max-min)*(Double.pi/180)))+(min)*(Double.pi/180)), initialVelocity: 10)
     }
 
 
@@ -70,12 +70,12 @@ class MainMenu: UIView {
         }
     }
     
-    override func drawRect(rect:CGRect) {
+    override func draw(_ rect:CGRect) {
         if (balls != nil) {
             for ball in balls {
-                let circle = UIBezierPath(arcCenter: CGPointMake(CGFloat(ball.x), CGFloat(ball.y)), radius: CGFloat(ball.r), startAngle: 0, endAngle: 7, clockwise: true)
+                let circle = UIBezierPath(arcCenter: CGPoint(x: CGFloat(ball.x), y: CGFloat(ball.y)), radius: CGFloat(ball.r), startAngle: 0, endAngle: 7, clockwise: true)
                 
-                UIColor.blackColor().setFill()
+                UIColor.black.setFill()
                 circle.fill()
             }
         }
@@ -86,56 +86,56 @@ class MainMenu: UIView {
     }
     func showTitle() {
         //println("in showTitle")
-        title.frame = CGRectMake(0, frame.size.height/6, frame.size.width, frame.size.height/3)
+        title.frame = CGRect(x: 0, y: frame.size.height/6, width: frame.size.width, height: frame.size.height/3)
         
-        title.attributedText = NSAttributedString(string: "Crazy Balls", attributes: [NSFontAttributeName:UIFont.systemFontOfSize(frame.size.width/8), NSParagraphStyleAttributeName: paragraphStyle])
+        title.attributedText = NSAttributedString(string: "Crazy Balls", attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: frame.size.width/8), NSParagraphStyleAttributeName: paragraphStyle])
         title.alpha = 0.0
         addSubview(title)
-        UIView.animateWithDuration(0.2, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
                 self.title.alpha = 1.0
                 self.setNeedsDisplay()
             })
         setNeedsDisplay()
-        NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "showMenu", userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(MainMenu.showMenu), userInfo: nil, repeats: false)
       
     }
     func showMenu() {
        // delegate.receiveAction(ButtonLayout.allShown.rawValue)
 
-        h.attributedText = NSAttributedString(string: "highscore: 0", attributes: [NSFontAttributeName:UIFont.systemFontOfSize(frame.size.width/40), NSParagraphStyleAttributeName:paragraphStyle])
+        h.attributedText = NSAttributedString(string: "highscore: 0", attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: frame.size.width/40), NSParagraphStyleAttributeName:paragraphStyle])
         h.sizeToFit()
-        h.frame = CGRectMake(frame.size.width/2-h.frame.size.width/2, 5*frame.size.height/9, h.frame.size.width, h.frame.size.height)
+        h.frame = CGRect(x: frame.size.width/2-h.frame.size.width/2, y: 5*frame.size.height/9, width: h.frame.size.width, height: h.frame.size.height)
         h.alpha = 0.0
         addSubview(h)
-        play.setTitle("play", forState: UIControlState.Normal)
-        play.titleLabel?.font = UIFont.systemFontOfSize(frame.size.width/15)
+        play.setTitle("play", for: UIControlState())
+        play.titleLabel?.font = UIFont.systemFont(ofSize: frame.size.width/15)
         play.sizeToFit()
-        play.frame = (frame: CGRectMake(frame.size.width/2-play.frame.size.width/2, 6*frame.size.height/9, play.frame.size.width, play.frame.size.height))
+        play.frame = CGRect(x: frame.size.width/2-play.frame.size.width/2, y: 6*frame.size.height/9, width: play.frame.size.width, height: play.frame.size.height)
         play.alpha = 0.0
-        play.addTarget(self, action: "playPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        play.addTarget(self, action: #selector(MainMenu.playPressed), for: UIControlEvents.touchUpInside)
         addSubview(play)
-        UIView.animateWithDuration(1, animations: {
+        UIView.animate(withDuration: 1, animations: {
             self.play.alpha = 1.0
             self.h.alpha = 1.0
         })
     }
     func playPressed() {
         //println("pressed! Yayayayya")
-        UIView.animateWithDuration(1, animations: {
+        UIView.animate(withDuration: 1, animations: {
             self.title.alpha = 0.0
             self.h.alpha = 0.0
             let frame = self.play.frame
-            self.play.frame = CGRectMake(frame.origin.x, -frame.size.height, frame.size.width, frame.size.height)
+            self.play.frame = CGRect(x: frame.origin.x, y: -frame.size.height, width: frame.size.width, height: frame.size.height)
             },
             completion: {finished in
                 let view:View = View(frame: self.frame)
                 self.addSubview(view)
         });
-        UIView.animateWithDuration(1, animations: {
+        UIView.animate(withDuration: 1, animations: {
             self.title.alpha = 0.0
             self.h.alpha = 0.0
             let frame = self.play.frame
-            self.play.frame = CGRectMake(frame.origin.x, -frame.size.height, frame.size.width, frame.size.height)
+            self.play.frame = CGRect(x: frame.origin.x, y: -frame.size.height, width: frame.size.width, height: frame.size.height)
         })
         setNeedsDisplay()
     }

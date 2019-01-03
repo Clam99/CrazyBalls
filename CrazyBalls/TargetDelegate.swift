@@ -1,3 +1,3 @@
 protocol TargetDelegate {
-    func receiveAction(passedData:String)
+    func receiveAction(_ passedData:String)
 }

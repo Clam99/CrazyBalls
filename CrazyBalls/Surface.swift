@@ -34,13 +34,13 @@ class Surface:GameObject, ChangeableAngle {
         }
     }
     
-    func setAngle(val:Double) {
+    func setAngle(_ val:Double) {
         angle = val
         updatePoints()
     }
     
     
-    func setPoints(points:(Vector,Vector)) {
+    func setPoints(_ points:(Vector,Vector)) {
         self.points = points
         updatePoints()
     }
@@ -50,11 +50,11 @@ class Surface:GameObject, ChangeableAngle {
     }
     
     func getSurfaceVector() -> Vector {
-        var v = Vector.subtract(points.0, v2: points.1)
+        let v = Vector.subtract(points.0, v2: points.1)
         return v
     }
     
-    func isTouchingBall(ball:Ball) -> Bool {
+    func isTouchingBall(_ ball:Ball) -> Bool {
         let sToB:Vector = Vector(x: ball.x-points.0.x, y: ball.y-points.0.y);//top of surface to ball vector
         var projLength:Double = sToB.getMagnitude()*(Vector.dotP(sToB, v2: getSurfaceVector())/(sToB.getMagnitude()*getSurfaceVector().getMagnitude()));//length of projection of sToB onto the surface
         projLength = projLength*Double(-1.0)
@@ -76,29 +76,29 @@ class Surface:GameObject, ChangeableAngle {
         }
     }
     
-    func getCoordsCorrespondingToXAndYWithAngle(x:Double, y:Double) -> Vector {
+    func getCoordsCorrespondingToXAndYWithAngle(_ x:Double, y:Double) -> Vector {
         let toProj:Vector = Vector(x: x-points.0.x,y: y-points.0.y);
         let proj:Vector = toProj.projectOnto(getSurfaceVector());
         return Vector.add(Vector(x: points.0.x, y: points.0.y), v2: proj);
     }
     
-    func getDistance(x1:Double, y1:Double, x2:Double, y2:Double) -> Double {
+    func getDistance(_ x1:Double, y1:Double, x2:Double, y2:Double) -> Double {
         return sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))
     }
     
     func getBP() -> UIBezierPath {
         var rect:CGRect
-        var length:Double = getSurfaceVector().getMagnitude()
-        var cx = points.1.x+(points.0.x-points.1.x)/2
-        var cy = points.1.y+(points.0.y-points.1.y)/2
+        let length:Double = getSurfaceVector().getMagnitude()
+        let cx = points.1.x+(points.0.x-points.1.x)/2
+        let cy = points.1.y+(points.0.y-points.1.y)/2
         //println("cx: \(cx) and cy: \(cy)")
-        var bp = UIBezierPath(roundedRect: CGRectMake(CGFloat(0-length/2),CGFloat(0-RECT_HEIGHT/2), CGFloat(length), CGFloat(RECT_HEIGHT)), cornerRadius: CGFloat(5))
+        let bp = UIBezierPath(roundedRect: CGRect(x: CGFloat(0-length/2),y: CGFloat(0-RECT_HEIGHT/2), width: CGFloat(length), height: CGFloat(RECT_HEIGHT)), cornerRadius: CGFloat(5))
         let a = CGFloat(Double(angle))
-        let transform:CGAffineTransform = CGAffineTransformMakeRotation(a)
+        let transform:CGAffineTransform = CGAffineTransform(rotationAngle: a)
         //println("Well the angle that I'm drawing is \(a) in radians using the angle \(angle) in radians")
-        bp.applyTransform(transform)
-        let transform2:CGAffineTransform = CGAffineTransformMakeTranslation(CGFloat(cx), CGFloat(cy))
-        bp.applyTransform(transform2)
+        bp.apply(transform)
+        let transform2:CGAffineTransform = CGAffineTransform(translationX: CGFloat(cx), y: CGFloat(cy))
+        bp.apply(transform2)
         return bp
     }
     
